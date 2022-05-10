@@ -4,8 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/KUTask/backend/graph"
+	"github.com/KUTask/backend/db"
 	"github.com/KUTask/backend/graph/generated"
+	"github.com/KUTask/backend/graph/resolvers"
 	"github.com/arsmn/fastgql/graphql/handler"
 	"github.com/arsmn/fastgql/graphql/playground"
 	fiber "github.com/gofiber/fiber/v2"
@@ -21,7 +22,7 @@ func main() {
 
 	app := fiber.New()
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
 	gqlHandler := srv.Handler()
 	playground := playground.Handler("GraphQL playground", "/query")
@@ -37,5 +38,7 @@ func main() {
 	})
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+
+	db.Connect()
 	log.Fatal(app.Listen(":" + port))
 }
