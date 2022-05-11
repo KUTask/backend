@@ -4,16 +4,22 @@ import (
 	"log"
 	"os"
 
+	"github.com/KUTask/backend/api/auth"
 	"github.com/KUTask/backend/graph"
 	"github.com/KUTask/backend/graph/generated"
 	"github.com/arsmn/fastgql/graphql/handler"
 	"github.com/arsmn/fastgql/graphql/playground"
 	fiber "github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
 const defaultPort = "8080"
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
@@ -35,6 +41,15 @@ func main() {
 		playground(c.Context())
 		return nil
 	})
+
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.SendString("OK")
+	})
+
+	// Auth Api
+	authApi := app.Group("/api/auth")
+
+	authApi.Post("/signin", auth.Signin)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(app.Listen(":" + port))
