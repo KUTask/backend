@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/KUTask/backend/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -78,7 +80,7 @@ func Signin(c *fiber.Ctx) error {
 	requestBody := new(RequestBody)
 	c.BodyParser(requestBody)
 
-	token, err := getUserInfo(requestBody)
+	user, err := getUserInfo(requestBody)
 
 	if err != nil {
 		return err
@@ -86,13 +88,22 @@ func Signin(c *fiber.Ctx) error {
 
 	kuAccessTokenCookie := &fiber.Cookie{
 		Name:    "ku_access_token",
-		Value:   token.AccessToken,
+		Value:   user.AccessToken,
 		Expires: time.Now().Add(time.Minute * 30),
 	}
 
 	c.Cookie(kuAccessTokenCookie)
 
-	fmt.Println("Token", token.AccessToken)
+	// Signing Local's Token
+	jwtToken := utils.JwtInstance()
 
-	return c.JSON(*token)
+	localToken, err := jwtToken.Sign(user.User.IdCode, user.User.TitleTh, user.User.FirstNameTh, user.User.LastNameTh)
+
+	if err != nil {
+		return fmt.Errorf("%v", err)
+	}
+
+	return c.JSON(map[string]string{
+		"access_token": localToken,
+	})
 }
