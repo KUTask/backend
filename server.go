@@ -50,6 +50,7 @@ func main() {
 	authApi := app.Group("/api/auth")
 
 	authApi.Post("/signin", auth.Signin)
+	authApi.Post("/signout", auth.Signout)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(app.Listen(":" + port))
