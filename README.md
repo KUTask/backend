@@ -2,11 +2,11 @@
 
 Project is working in process.
 
-### Run Server
+## Run Server
 go run server.go
 
-### Environment Variable
-```
+## Environment Variable
+```env
 JWT_PRIVATE_KEY=
 JWT_PUBLIC_KEY=
 ```
