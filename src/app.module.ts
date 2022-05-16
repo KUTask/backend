@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module'
 import configuration from './configs'
 import { TypegooseModule } from '@hirasawa_au/nestjs-typegoose'
 import { TypegooseConfig } from './configs/typegoose.config'
+import { RefreshTokenModule } from './refresh-token/refresh-token.module'
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TypegooseConfig } from './configs/typegoose.config'
     TypegooseModule.forRootAsync({
       useClass: TypegooseConfig,
     }),
+    RefreshTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

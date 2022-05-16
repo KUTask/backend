@@ -89,10 +89,8 @@ describe('RefreshTokenService', () => {
 
   describe('refresh', () => {
     it('should return null if refreshtoken is expired', async () => {
-      refreshTokenModel.findById = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue({
-          expired_at: dayjs().subtract(1, 'day').toDate(),
-        }),
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
       })
 
       const result = await service.refresh(new Types.ObjectId())
@@ -101,7 +99,7 @@ describe('RefreshTokenService', () => {
     })
 
     it('should return null if refreshtoken not found', async () => {
-      refreshTokenModel.findById = jest.fn().mockReturnValue({
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(null),
       })
 
@@ -117,7 +115,7 @@ describe('RefreshTokenService', () => {
         save: jest.fn(),
       }
 
-      refreshTokenModel.findById = jest.fn().mockReturnValue({
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockedDoc),
       })
 
@@ -134,7 +132,7 @@ describe('RefreshTokenService', () => {
         save: jest.fn(),
       }
 
-      refreshTokenModel.findById = jest.fn().mockReturnValue({
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockedDoc),
       })
 

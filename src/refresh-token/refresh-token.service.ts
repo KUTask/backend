@@ -4,6 +4,7 @@ import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
 import * as dayjs from 'dayjs'
 import { Types } from 'mongoose'
 import { RefreshTokenModel } from 'src/models/refresh-token.model'
+import { UserModel } from 'src/models/user.model'
 
 @Injectable()
 export class RefreshTokenService {
@@ -36,10 +37,13 @@ export class RefreshTokenService {
 
   async refresh(id: Types.ObjectId) {
     const doc: DocumentType<RefreshTokenModel> = await this.refreshTokenModel
-      .findById(id)
+      .findOne({
+        _id: id,
+        expired_at: { $gt: new Date() },
+      })
       .exec()
 
-    if (!(!!doc && dayjs().isBefore(doc.expired_at))) {
+    if (!doc) {
       return null
     }
 
@@ -47,6 +51,26 @@ export class RefreshTokenService {
     await doc.save()
 
     return this.create(<string>doc.user)
+  }
+
+  async findUserByToken(id: Types.ObjectId): Promise<DocumentType<UserModel>> {
+    const doc = await this.refreshTokenModel
+      .findOne({
+        _id: id,
+        expired_at: { $gt: new Date() },
+      })
+      .select('user')
+      .exec()
+
+    if (!doc) {
+      return null
+    }
+
+    const populatedDoc: DocumentType<RefreshTokenModel> = await doc.populate(
+      'user',
+    )
+
+    return <DocumentType<UserModel>>populatedDoc.user
   }
 
   private getPermantExpireDate() {
