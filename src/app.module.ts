@@ -7,7 +7,10 @@ import { GqlConfigService } from './configs/gql.config'
 import { HealthModule } from './health/health.module'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
+import { UserModule } from './user/user.module'
 import configuration from './configs'
+import { TypegooseModule } from '@hirasawa_au/nestjs-typegoose'
+import { TypegooseConfig } from './configs/typegoose.config'
 
 @Module({
   imports: [
@@ -20,6 +23,10 @@ import configuration from './configs'
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
+    }),
+    UserModule,
+    TypegooseModule.forRootAsync({
+      useClass: TypegooseConfig,
     }),
   ],
   controllers: [AppController],
