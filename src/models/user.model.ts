@@ -17,18 +17,18 @@ export class UserModel {
   })
   _id: string
 
-  @prop({ alias: 'firstName', required: true })
-  first_name: string
+  @prop({ alias: 'displayName', required: true })
+  display_name: string
 
-  firstName?: string
+  displayName?: string
 
-  @prop({ alias: 'lastName', required: true })
-  last_name: string
+  @prop({ required: true, default: [] })
+  sections: string[]
 
-  lastName?: string
+  @prop({ alias: 'profilePictureUrl', required: true })
+  pfp_url: string
 
-  @prop({ required: true })
-  username: string
+  profilePictureUrl?: string
 
   @prop({ required: true })
   email: string

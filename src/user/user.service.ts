@@ -2,9 +2,14 @@ import { Injectable } from '@nestjs/common'
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
 import { UserModel } from 'src/models/user.model'
 
+import { InjectModel } from '@hirasawa_au/nestjs-typegoose'
+
 @Injectable()
 export class UserService {
-  constructor(private readonly userModel: ReturnModelType<typeof UserModel>) {}
+  constructor(
+    @InjectModel(UserModel)
+    private readonly userModel: ReturnModelType<typeof UserModel>,
+  ) {}
 
   findById(id: string): Promise<DocumentType<UserModel>> {
     return this.userModel.findById(id).exec()
@@ -12,16 +17,14 @@ export class UserService {
 
   async create(
     uid: string,
-    firstName: string,
-    lastName: string,
-    username: string,
+    displayName: string,
+    profilePictureUrl: string,
     email: string,
   ): Promise<DocumentType<UserModel>> {
     return this.userModel.create({
-      id: uid,
-      firstName,
-      lastName,
-      username,
+      _id: uid,
+      displayName,
+      profilePictureUrl,
       email,
     })
   }
@@ -30,6 +33,15 @@ export class UserService {
     const { id, ...updateField } = data
     return this.userModel
       .findByIdAndUpdate(id, updateField, { new: true })
+      .exec()
+  }
+
+  upsert(
+    user: Partial<Omit<UserModel, '_id'>> & { id: string },
+  ): Promise<DocumentType<UserModel>> {
+    const { id, ...updateField } = user
+    return this.userModel
+      .findByIdAndUpdate(id, updateField, { new: true, upsert: true })
       .exec()
   }
 }
