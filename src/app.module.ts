@@ -4,6 +4,7 @@ import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { GqlConfigService } from './configs/gql.config'
+import { HealthModule } from './health/health.module'
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { GqlConfigService } from './configs/gql.config'
       useClass: GqlConfigService,
       driver: MercuriusDriver,
     }),
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

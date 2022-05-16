@@ -13,6 +13,11 @@ export class GqlConfigService implements MercuriusDriverConfigFactory {
     return {
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      context: ({ raw }) => {
+        return {
+          user: raw.user,
+        }
+      },
     }
   }
 }

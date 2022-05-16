@@ -4,6 +4,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
+import fastifyCookie from '@fastify/cookie'
 
 async function bootstrap() {
   const port = process.env.PORT ?? 4000
@@ -11,6 +12,8 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   )
+
+  await app.register(fastifyCookie)
   await app.listen(port, '0.0.0.0')
 }
 bootstrap()
