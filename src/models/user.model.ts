@@ -1,4 +1,5 @@
 import { index, modelOptions, prop } from '@typegoose/typegoose'
+import { toBuffer, toString } from 'uuid-buffer'
 
 @modelOptions({
   schemaOptions: {
@@ -7,8 +8,14 @@ import { index, modelOptions, prop } from '@typegoose/typegoose'
 })
 @index({ username: 1 }, { unique: true })
 export class UserModel {
-  @prop()
-  id: string
+  @prop({
+    type: Buffer,
+    subtype: 4,
+    get: (_) => (_ ? toString(_) : _),
+    set: toBuffer,
+    required: true,
+  })
+  _id: string
 
   @prop({ alias: 'firstName', required: true })
   first_name: string
