@@ -22,12 +22,4 @@ export class UserModel {
 
   @prop({ required: true, default: [] })
   sections: string[]
-
-  @prop({ alias: 'profilePictureUrl', required: true })
-  pfp_url: string
-
-  profilePictureUrl?: string
-
-  @prop({ required: true })
-  email: string
 }
