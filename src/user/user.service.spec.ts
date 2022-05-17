@@ -42,10 +42,10 @@ describe('UserService', () => {
         displayName: 'displayName',
         email: 'email',
         profilePictureUrl: 'profilePictureUrl',
-        _id: 'id',
+        uid: 'uid',
       }
       await service.create(
-        user._id,
+        user.uid,
         user.displayName,
         user.profilePictureUrl,
         user.email,
@@ -55,27 +55,63 @@ describe('UserService', () => {
   })
 
   describe('upsert', () => {
-    it('should call update with upsert argument', async () => {
-      userModel.findByIdAndUpdate = jest.fn().mockReturnValue({
+    it('should call findByUid correctly', async () => {
+      service.findByUid = jest.fn().mockReturnValue({
         exec: jest.fn(),
       })
-      const user: Partial<UserModel> & { id: string } = {
-        id: 'id',
+
+      service.update = jest.fn()
+      service.create = jest.fn()
+      const user: Partial<UserModel> & { uid: string } = {
+        uid: 'id',
         displayName: 'displayName',
         email: 'email',
         profilePictureUrl: 'profilePictureUrl',
       }
 
       await service.upsert(user)
-      expect(userModel.findByIdAndUpdate).toBeCalledWith(
-        user.id,
-        {
-          displayName: user.displayName,
-          email: user.email,
-          profilePictureUrl: user.profilePictureUrl,
-        },
-        { upsert: true, new: true },
+      expect(service.findByUid).toBeCalledWith(user.uid)
+    })
+
+    it('should call create when not have doc in exist', async () => {
+      service.findByUid = jest.fn().mockResolvedValue(null)
+
+      service.update = jest.fn()
+      service.create = jest.fn()
+      const user: Partial<UserModel> & { uid: string } = {
+        uid: 'id',
+        displayName: 'displayName',
+        email: 'email',
+        profilePictureUrl: 'profilePictureUrl',
+      }
+
+      await service.upsert(user)
+      expect(service.create).toBeCalledWith(
+        user.uid,
+        user.displayName,
+        user.profilePictureUrl,
+        user.email,
       )
+    })
+
+    it('should call update when have doc in exist', async () => {
+      const doc = { _id: new Types.ObjectId() }
+      service.findByUid = jest.fn().mockResolvedValue(doc)
+
+      service.update = jest.fn()
+      service.create = jest.fn()
+      const user: Partial<UserModel> & { uid: string } = {
+        uid: 'id',
+        displayName: 'displayName',
+        email: 'email',
+        profilePictureUrl: 'profilePictureUrl',
+      }
+
+      await service.upsert(user)
+      expect(service.update).toBeCalledWith({
+        id: doc._id,
+        ...user,
+      })
     })
   })
 
@@ -84,8 +120,8 @@ describe('UserService', () => {
       userModel.findByIdAndUpdate = jest.fn().mockReturnValue({
         exec: jest.fn(),
       })
-      const user: Partial<UserModel> & { id: string } = {
-        id: 'id',
+      const user: Partial<UserModel> & { id: Types.ObjectId } = {
+        id: new Types.ObjectId('62826d07b589eb96977eda1b'),
         displayName: 'displayName',
         email: 'email',
         profilePictureUrl: 'profilePictureUrl',
@@ -101,6 +137,17 @@ describe('UserService', () => {
         },
         { new: true },
       )
+    })
+  })
+
+  describe('findByUid', () => {
+    it('should call findOne with correct uid', async () => {
+      userModel.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn(),
+      })
+      const uid = 'uid'
+      await service.findByUid(uid)
+      expect(userModel.findOne).toBeCalledWith({ uid })
     })
   })
 })
