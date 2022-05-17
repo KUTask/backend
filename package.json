@@ -35,6 +35,7 @@
     "@typegoose/typegoose": "^9.8.1",
     "dayjs": "^1.11.2",
     "fastify-swagger": "^5.2.0",
+    "firebase-admin": "^10.2.0",
     "graphql": "^16.5.0",
     "mercurius": "^9.5.0",
     "mongoose": "^6.3.3",
