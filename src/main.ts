@@ -14,7 +14,9 @@ async function bootstrap() {
     new FastifyAdapter(),
   )
 
-  await app.register(fastifyCookie)
+  await app.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET,
+  })
   new SwaggerBuilder(app).build()
   await app.listen(port, '0.0.0.0')
 }
