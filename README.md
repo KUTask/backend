@@ -58,16 +58,22 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Run via Docker Compose
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Run docker compose
 
-## Stay in touch
+```
+docker compose -f docker-compose.dev.yml up -d
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Stop docker compose & Delete container
 
-## License
+```
+docker compose -f docker-compose.dev.yml down
+```
 
-Nest is [MIT licensed](LICENSE).
+## Swagger
+
+```
+http://localhost:4000/api
+```

@@ -1,0 +1,32 @@
+name: kutask-backend
+services:
+  api:
+    build: 
+      context: .
+    environment:
+      JWT_PRIVATE_KEY: |- 
+        -----BEGIN EC PRIVATE KEY-----
+        MHcCAQEEIDUfuO+Fl3vH/ah42tA9v+SorHnJwOA1PAa2RaQIh5CIoAoGCCqGSM49
+        AwEHoUQDQgAEtgH8owO7jpS9De7yWklHXGndVxAq1Sah+PqN8o4qiArOj/EjBO/p
+        /QBxow37yhBdzlG17LJMGCMa9JRCREMm/Q==
+        -----END EC PRIVATE KEY-----
+      JWT_PUBLIC_KEY: |-
+        -----BEGIN PUBLIC KEY-----
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEtgH8owO7jpS9De7yWklHXGndVxAq
+        1Sah+PqN8o4qiArOj/EjBO/p/QBxow37yhBdzlG17LJMGCMa9JRCREMm/Q==
+        -----END PUBLIC KEY-----
+      MONGO_URI: mongodb://mongodb:27017/kutask
+      NODE_ENV: development
+      PORT: 4000
+    ports:
+      - 4000:4000
+      
+  mongodb:
+    image: mongo:5.0.8
+    restart: always
+    volumes:
+      - ./volumes/mongodb:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=kutask
