@@ -1,0 +1,40 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "src",
+  "testRegex": ".spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "coverageDirectory": "../coverage",
+  "testEnvironment": "node",
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/$1"
+  },
+  "collectCoverageFrom": [
+    "**/*.ts",
+    "!**/*.module.ts",
+    "!**/*.controller.ts",
+    "!**/*.model.ts",
+    "!**/auth/**",
+    "!**/configs/**",
+    "!**/swagger.ts",
+    "!**/*.schema.ts",
+    "!**/dto/**",
+    "!**/scripts/*.ts",
+    "!**/helpers/*.ts",
+    "!main.ts",
+    "!features/**/*.ts"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "statements": 80
+    },
+    "src/**/*.service.ts": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    }
+  },
+  "coverageReporters": ["text", "cobertura", "lcov"]
+}
