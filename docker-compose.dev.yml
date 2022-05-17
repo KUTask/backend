@@ -15,7 +15,7 @@ services:
         MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEtgH8owO7jpS9De7yWklHXGndVxAq
         1Sah+PqN8o4qiArOj/EjBO/p/QBxow37yhBdzlG17LJMGCMa9JRCREMm/Q==
         -----END PUBLIC KEY-----
-      MONGO_URI: mongodb://localhost:27017/kutask
+      MONGO_URI: mongodb://mongodb:27017/kutask
       NODE_ENV: development
       PORT: 4000
     ports:
