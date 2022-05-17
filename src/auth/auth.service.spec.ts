@@ -96,7 +96,7 @@ describe('AuthService', () => {
         clearCookie: jest.fn(),
       }
       service.clearAccessToken(res)
-      expect(res.clearCookie).toBeCalledWith('access_token')
+      expect(res.clearCookie).toBeCalledWith('access_token', { path: null })
     })
   })
 
@@ -106,7 +106,7 @@ describe('AuthService', () => {
         clearCookie: jest.fn(),
       }
       service.clearRefreshToken(res)
-      expect(res.clearCookie).toBeCalledWith('refresh_token')
+      expect(res.clearCookie).toBeCalledWith('refresh_token', { path: null })
     })
   })
 })

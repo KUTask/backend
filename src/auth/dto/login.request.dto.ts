@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 
 export class LoginRequestDto {
   @ApiProperty({ description: "Firebase user's uid" })
-  id: string
+  uid: string
 
   @ApiProperty({ description: 'Display name' })
   displayName: string

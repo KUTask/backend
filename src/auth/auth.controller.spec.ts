@@ -39,7 +39,7 @@ describe('AuthController', () => {
   describe('getAccessToken', () => {
     it('should call upsert with dto value', async () => {
       const dto = new LoginRequestDto()
-      dto.id = '628247b4d47554325bb8514e'
+      dto.uid = '628247b4d47554325bb8514e'
       dto.email = 'email'
       dto.displayName = 'displayName'
       dto.profilePictureUrl = 'profilePictureUrl'
@@ -49,7 +49,9 @@ describe('AuthController', () => {
         setCookie: jest.fn().mockReturnThis(),
       }
 
-      userService.upsert = jest.fn().mockResolvedValue(dto)
+      userService.upsert = jest
+        .fn()
+        .mockResolvedValue({ _id: new Types.ObjectId(), dto })
       authService.sign = jest.fn().mockResolvedValue('token')
       refreshTokenService.create = jest.fn().mockResolvedValue('refreshToken')
       authService.setTokenInCookie = jest.fn()
@@ -61,17 +63,22 @@ describe('AuthController', () => {
 
     it('should call sign with correct payload', async () => {
       const dto = new LoginRequestDto()
-      dto.id = '628247b4d47554325bb8514e'
+      dto.uid = '628247b4d47554325bb8514e'
       dto.email = 'email'
       dto.displayName = 'displayName'
       dto.profilePictureUrl = 'profilePictureUrl'
       dto.permanentLogin = false
 
+      const userId = new Types.ObjectId('628263ff72e3f7192ca1b2e6')
+
       const res = {
         setCookie: jest.fn().mockReturnThis(),
       }
 
-      userService.upsert = jest.fn().mockResolvedValue(dto)
+      userService.upsert = jest.fn().mockResolvedValue({
+        _id: userId,
+        ...dto,
+      })
       authService.sign = jest.fn().mockResolvedValue('token')
       refreshTokenService.create = jest.fn().mockResolvedValue('refreshToken')
       authService.setTokenInCookie = jest.fn()
@@ -81,24 +88,29 @@ describe('AuthController', () => {
       expect(authService.sign).toBeCalledWith({
         displayName: dto.displayName,
         email: dto.email,
-        id: dto.id,
+        id: userId.toHexString(),
         profilePictureUrl: dto.profilePictureUrl,
       })
     })
 
     it('should create refresh token with correctly user', async () => {
       const dto = new LoginRequestDto()
-      dto.id = '628247b4d47554325bb8514e'
+      dto.uid = '628247b4d47554325bb8514e'
       dto.email = 'email'
       dto.displayName = 'displayName'
       dto.profilePictureUrl = 'profilePictureUrl'
       dto.permanentLogin = false
 
+      const userId = new Types.ObjectId('628263ff72e3f7192ca1b2e6')
+
       const res = {
         setCookie: jest.fn().mockReturnThis(),
       }
 
-      userService.upsert = jest.fn().mockResolvedValue(dto)
+      userService.upsert = jest.fn().mockResolvedValue({
+        _id: userId,
+        ...dto,
+      })
       authService.sign = jest.fn().mockResolvedValue('token')
       refreshTokenService.create = jest.fn().mockResolvedValue('refreshToken')
       authService.setTokenInCookie = jest.fn()
@@ -106,14 +118,14 @@ describe('AuthController', () => {
       await controller.getAccessToken(dto, res)
 
       expect(refreshTokenService.create).toBeCalledWith(
-        dto.id,
+        userId,
         dto.permanentLogin,
       )
     })
 
     it('should set in cookie', async () => {
       const dto = new LoginRequestDto()
-      dto.id = '628247b4d47554325bb8514e'
+      dto.uid = '628247b4d47554325bb8514e'
       dto.email = 'email'
       dto.displayName = 'displayName'
       dto.profilePictureUrl = 'profilePictureUrl'
@@ -122,8 +134,10 @@ describe('AuthController', () => {
       const res = {
         setCookie: jest.fn().mockReturnThis(),
       }
-
-      userService.upsert = jest.fn().mockResolvedValue(dto)
+      userService.upsert = jest.fn().mockResolvedValue({
+        _id: new Types.ObjectId(),
+        ...dto,
+      })
       authService.sign = jest.fn().mockResolvedValue('token')
       refreshTokenService.create = jest.fn().mockResolvedValue('refreshToken')
       authService.setTokenInCookie = jest.fn()
@@ -149,7 +163,8 @@ describe('AuthController', () => {
 
       const res = {
         clearCookie: jest.fn().mockReturnThis(),
-        status: jest.fn().mockReturnValue(204),
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn().mockReturnThis(),
       }
 
       authService.clearAccessToken = jest.fn()
@@ -170,7 +185,8 @@ describe('AuthController', () => {
 
       const res = {
         clearCookie: jest.fn().mockReturnThis(),
-        status: jest.fn().mockReturnValue(204),
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
       }
 
       authService.clearAccessToken = jest.fn()
@@ -193,7 +209,8 @@ describe('AuthController', () => {
 
       const res = {
         clearCookie: jest.fn().mockReturnThis(),
-        status: jest.fn().mockReturnValue(204),
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
       }
 
       authService.clearAccessToken = jest.fn()
@@ -214,7 +231,8 @@ describe('AuthController', () => {
 
       const res = {
         clearCookie: jest.fn().mockReturnThis(),
-        status: jest.fn().mockReturnValue(204),
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
       }
 
       authService.clearAccessToken = jest.fn()

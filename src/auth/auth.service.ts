@@ -45,10 +45,10 @@ export class AuthService {
   }
 
   clearAccessToken(res: Pick<FastifyReply, 'clearCookie'>) {
-    res.clearCookie('access_token')
+    res.clearCookie('access_token', { path: null })
   }
 
   clearRefreshToken(res: Pick<FastifyReply, 'clearCookie'>) {
-    res.clearCookie('refresh_token')
+    res.clearCookie('refresh_token', { path: null })
   }
 }

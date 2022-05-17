@@ -30,18 +30,18 @@ export class AuthController {
   @ApiOkResponse({ type: LoginResponseDto })
   async getAccessToken(
     @Body() dto: LoginRequestDto,
-    @Res() res: Pick<FastifyReply, 'setCookie'>,
+    @Res({ passthrough: true }) res: Pick<FastifyReply, 'setCookie'>,
   ) {
     const user = await this.userService.upsert(dto)
     const accessToken = await this.authService.sign({
-      id: user.id,
+      id: user._id.toHexString(),
       displayName: user.displayName,
       profilePictureUrl: user.profilePictureUrl,
       email: user.email,
     })
 
     const refreshToken = await this.refreshTokenService.create(
-      user.id,
+      user._id,
       dto.permanentLogin,
     )
 
@@ -60,14 +60,13 @@ export class AuthController {
     @Res()
     res: Pick<FastifyReply, 'clearCookie' | 'status'>,
   ) {
-    this.authService.clearAccessToken(res)
-
     await this.refreshTokenService.revoke(
       new Types.ObjectId(req.cookies.refresh_token),
     )
-    this.authService.clearRefreshToken(res)
 
-    res.status(HttpStatus.NO_CONTENT)
+    this.authService.clearAccessToken(res)
+    this.authService.clearRefreshToken(res)
+    res.status(HttpStatus.NO_CONTENT).send()
   }
 
   @Post('/refresh')
