@@ -38,7 +38,7 @@ describe('RefreshTokenService', () => {
         _id: new Types.ObjectId(),
       })
 
-      const userId = 'userId'
+      const userId = new Types.ObjectId('6282622650c8a66487e675d8')
       await service.create(userId)
       expect(refreshTokenModel.create).toBeCalledWith({
         user: userId,
@@ -51,7 +51,7 @@ describe('RefreshTokenService', () => {
         _id: new Types.ObjectId(),
       })
 
-      const userId = 'userId'
+      const userId = new Types.ObjectId('6282622650c8a66487e675d8')
       service['getShortExpireDate'] = jest.fn()
       await service.create(userId, false)
 
@@ -63,7 +63,7 @@ describe('RefreshTokenService', () => {
         _id: new Types.ObjectId(),
       })
 
-      const userId = 'userId'
+      const userId = new Types.ObjectId('6282622650c8a66487e675d8')
       service['getPermantExpireDate'] = jest.fn()
       await service.create(userId, true)
 
@@ -142,6 +142,66 @@ describe('RefreshTokenService', () => {
         user: mockedDoc.user,
         expired_at: expect.any(Date),
       })
+    })
+  })
+
+  describe('findUserByToken', () => {
+    it('should findOne call correctly', async () => {
+      const doc = new refreshTokenModel()
+
+      doc.populate = jest.fn().mockResolvedValue({
+        user: null,
+      })
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(doc),
+      })
+
+      const id = new Types.ObjectId('6282622650c8a66487e675d8')
+
+      await service.findUserByToken(id)
+
+      expect(refreshTokenModel.findOne).toBeCalledWith({
+        _id: id,
+        expired_at: { $gt: expect.any(Date) },
+      })
+    })
+
+    it('should return null if not found', async () => {
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(null),
+      })
+
+      const result = await service.findUserByToken(new Types.ObjectId())
+
+      expect(result).toBeNull()
+    })
+
+    it('should call populate correctly', async () => {
+      const doc = new refreshTokenModel()
+
+      doc.populate = jest.fn().mockResolvedValue({
+        user: null,
+      })
+      refreshTokenModel.findOne = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(doc),
+      })
+
+      const id = new Types.ObjectId('6282622650c8a66487e675d8')
+
+      await service.findUserByToken(id)
+
+      expect(doc.populate).toBeCalledWith('user')
+    })
+  })
+
+  describe('getPermantExpireDate', () => {
+    it('should be more than 13 days', () => {
+      const result = service['getPermantExpireDate']()
+
+      expect(dayjs().add(13, 'day').diff(result, 'days')).toBeLessThanOrEqual(1)
     })
   })
 })

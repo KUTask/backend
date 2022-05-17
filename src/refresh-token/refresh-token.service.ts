@@ -15,7 +15,7 @@ export class RefreshTokenService {
     >,
   ) {}
 
-  async create(user: string, permanant = false): Promise<string> {
+  async create(user: Types.ObjectId, permanant = false): Promise<string> {
     const { _id }: DocumentType<RefreshTokenModel> =
       await this.refreshTokenModel.create({
         user,
@@ -50,7 +50,7 @@ export class RefreshTokenService {
     doc.expiredAt = new Date()
     await doc.save()
 
-    return this.create(<string>doc.user)
+    return this.create(<Types.ObjectId>doc.user)
   }
 
   async findUserByToken(id: Types.ObjectId): Promise<DocumentType<UserModel>> {
