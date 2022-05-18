@@ -23,7 +23,9 @@
     "!**/scripts/*.ts",
     "!**/helpers/*.ts",
     "!main.ts",
-    "!features/**/*.ts"
+    "!features/**/*.ts",
+    "!**/*.middleware.ts",
+    "!**/*.directive.ts"
   ],
   "coverageThreshold": {
     "global": {

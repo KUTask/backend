@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common'
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius'
 import { AppController } from './app.controller'
@@ -9,6 +14,7 @@ import { ConfigModule } from '@nestjs/config'
 import configuration from './configs'
 import { TypegooseModule } from '@hirasawa_au/nestjs-typegoose'
 import { TypegooseConfig } from './configs/typegoose.config'
+import { AuthMiddleware } from './auth/auth.middleware'
 
 @Module({
   imports: [
@@ -28,4 +34,11 @@ import { TypegooseConfig } from './configs/typegoose.config'
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '(.*)',
+      method: RequestMethod.ALL,
+    })
+  }
+}
