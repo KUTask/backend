@@ -15,6 +15,7 @@ import configuration from './configs'
 import { TypegooseModule } from '@hirasawa_au/nestjs-typegoose'
 import { TypegooseConfig } from './configs/typegoose.config'
 import { AuthMiddleware } from './auth/auth.middleware'
+import { UserModule } from './user/user.module'
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthMiddleware } from './auth/auth.middleware'
     TypegooseModule.forRootAsync({
       useClass: TypegooseConfig,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
