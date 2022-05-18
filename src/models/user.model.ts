@@ -19,7 +19,4 @@ export class UserModel {
   display_name: string
 
   displayName?: string
-
-  @prop({ required: true, default: [] })
-  sections: string[]
 }
