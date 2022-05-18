@@ -8,6 +8,7 @@ ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
 RUN npm ci
 COPY ./tsconfig*.json ./
 COPY ./src/ ./src/
+COPY ./firebase.json ./firebase.json
 RUN apt-get update && \
     apt-get install -yqq cpio
 RUN npm run build
