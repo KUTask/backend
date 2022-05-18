@@ -17,5 +17,6 @@ FROM setup
 ENV NODE_ENV=production
 RUN npm ci
 COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/firebase.json ./firebase.json
 EXPOSE 4000
 CMD npm run start:prod
