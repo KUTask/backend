@@ -16,13 +16,13 @@ export class UserResolver {
 
   @Mutation(() => UserType, { name: 'createUser' })
   @Directive('@auth')
-  async createUser(@User() user: DecodedIdToken) {
+  async createUser(@User() user: Pick<DecodedIdToken, 'uid' | 'name'>) {
     const hasUser = await this.userService.hasUser(user.uid)
 
     if (hasUser) {
       return this.userService.findByUid(user.uid)
     }
 
-    return this.userService.upsertByPayload(user.uid, user.name)
+    return this.userService.create(user.uid, user.name)
   }
 }

@@ -1,7 +1,7 @@
 import { InjectModel } from '@hirasawa_au/nestjs-typegoose'
 import { Injectable } from '@nestjs/common'
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
-import { getAuth } from 'firebase-admin/auth'
+import { auth } from 'firebase-admin'
 import { FilterQuery, Types } from 'mongoose'
 import { UserModel } from 'src/models/user.model'
 
@@ -31,17 +31,14 @@ export class UserService {
     return this.userModel.find(query).exec()
   }
 
-  async upsertByAccessToken(token: string) {
-    const payload = await getAuth().verifyIdToken(token, true)
+  async createByAccessToken(token: string) {
+    const payload = await auth().verifyIdToken(token, true)
 
     return this.create(payload.uid, payload.name)
   }
 
-  upsertByPayload(uid: string, displayName: string) {
-    return this.create(uid, displayName)
-  }
-
-  hasUser(uid: string) {
-    return this.userModel.count({ uid }).exec()
+  async hasUser(uid: string) {
+    const count = await this.userModel.count({ uid }).exec()
+    return !!count
   }
 }

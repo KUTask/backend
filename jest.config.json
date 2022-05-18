@@ -25,11 +25,12 @@
     "!main.ts",
     "!features/**/*.ts",
     "!**/*.middleware.ts",
-    "!**/*.directive.ts"
+    "!**/*.directive.ts",
+    "!**/*.decorator.ts"
   ],
   "coverageThreshold": {
     "global": {
-      "statements": 80
+      "statements": 60
     },
     "src/**/*.service.ts": {
       "statements": 100,
@@ -38,5 +39,6 @@
       "lines": 100
     }
   },
-  "coverageReporters": ["text", "cobertura", "lcov"]
+  "coverageReporters": ["text", "cobertura", "lcov"],
+  "moduleDirectories": ["node_modules"]
 }
