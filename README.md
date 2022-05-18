@@ -59,6 +59,12 @@ docker compose -f docker-compose.dev.yml up -d
 docker compose -f docker-compose.dev.yml down
 ```
 
+### Stop docker compose & remove local image
+
+```
+docker compose -f docker-compose.dev.yml down --rmi local
+```
+
 ## Swagger
 
 ```
