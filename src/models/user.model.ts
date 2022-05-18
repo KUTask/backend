@@ -6,7 +6,6 @@ import { Types } from 'mongoose'
     collection: 'users',
   },
 })
-@index({ username: 1 }, { unique: true })
 @index({ uid: 1 }, { unique: true })
 export class UserModel {
   @prop({ auto: true })
@@ -19,7 +18,4 @@ export class UserModel {
   display_name: string
 
   displayName?: string
-
-  @prop({ required: true, default: [] })
-  sections: string[]
 }
