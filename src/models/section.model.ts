@@ -12,7 +12,7 @@ export class SectionModel {
    * @description Section ID
    */
   @prop({ required: true })
-  _id: number
+  _id: string
 
   @prop({ ref: () => SubjectModel })
   subject: Ref<SubjectModel>
