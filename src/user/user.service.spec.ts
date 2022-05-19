@@ -3,37 +3,26 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { getModelForClass } from '@typegoose/typegoose'
 import { UserModel } from 'src/models/user.model'
 import { UserService } from './user.service'
-import * as admin from 'firebase-admin'
+import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin'
 
-jest.mock('firebase-admin', () => {
-  const uid = 'uid'
-  const name = 'name'
-
-  const authResponse = {
-    verifyIdToken: jest.fn().mockResolvedValue({
-      uid,
-      name,
-    }),
-  }
-
-  return {
-    auth: jest.fn().mockReturnValue(authResponse),
-  }
-})
+jest.mock('@aginix/nestjs-firebase-admin')
 
 describe('UserService', () => {
   let service: UserService
   const userModel = getModelForClass(UserModel)
+  let firebaseAuthService: FirebaseAuthenticationService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
         { provide: getModelToken('UserModel'), useValue: userModel },
+        FirebaseAuthenticationService,
       ],
     }).compile()
 
     service = module.get<UserService>(UserService)
+    firebaseAuthService = module.get(FirebaseAuthenticationService)
   })
 
   it('should be defined', () => {
@@ -91,10 +80,14 @@ describe('UserService', () => {
   describe('createByAccessToken', () => {
     it('should craete a user from correct token', async () => {
       service.create = jest.fn()
+      firebaseAuthService.verifyIdToken = jest.fn().mockResolvedValue({
+        uid: 'uid',
+        name: 'name',
+      })
       const token = 'token'
       await service.createByAccessToken(token)
 
-      expect(admin.auth).toBeCalled()
+      expect(firebaseAuthService.verifyIdToken).toBeCalledWith(token, true)
       expect(service.create).toBeCalled()
     })
   })
@@ -151,6 +144,13 @@ describe('UserService', () => {
         },
         { new: true },
       )
+    })
+  })
+  describe('deleteFirebaseUser', () => {
+    it('should delete firebase user', async () => {
+      const uid = 'uid'
+      await service.deleteFirebaseUser(uid)
+      expect(firebaseAuthService.deleteUser).toBeCalledWith(uid)
     })
   })
 

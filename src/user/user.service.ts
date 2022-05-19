@@ -1,3 +1,4 @@
+import { FirebaseAuthenticationService } from '@aginix/nestjs-firebase-admin'
 import { InjectModel } from '@hirasawa_au/nestjs-typegoose'
 import { Injectable, Logger } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
@@ -14,6 +15,7 @@ export class UserService {
   constructor(
     @InjectModel(UserModel)
     private readonly userModel: ReturnModelType<typeof UserModel>,
+    private readonly firebaseAuth: FirebaseAuthenticationService,
   ) {}
 
   create(id: string, displayName: string, verifiedEmail = false) {
@@ -33,7 +35,7 @@ export class UserService {
   }
 
   async createByAccessToken(token: string) {
-    const payload = await auth().verifyIdToken(token, true)
+    const payload = await this.firebaseAuth.verifyIdToken(token, true)
 
     return this.create(payload.uid, payload.name)
   }
@@ -41,6 +43,10 @@ export class UserService {
   async hasUser(id: string) {
     const count = await this.userModel.count({ id }).exec()
     return !!count
+  }
+
+  deleteFirebaseUser(id: string) {
+    return this.firebaseAuth.deleteUser(id)
   }
 
   updateDisplayName(id: string, displayName: string) {
