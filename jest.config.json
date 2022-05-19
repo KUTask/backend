@@ -26,12 +26,11 @@
     "!features/**/*.ts",
     "!**/*.middleware.ts",
     "!**/*.directive.ts",
-    "!**/*.decorator.ts"
+    "!**/*.decorator.ts",
+    "!**/*.interceptor.ts",
+    "!**/*.gql.ts"
   ],
   "coverageThreshold": {
-    "global": {
-      "statements": 60
-    },
     "src/**/*.service.ts": {
       "statements": 100,
       "branches": 100,

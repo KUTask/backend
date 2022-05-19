@@ -14,8 +14,16 @@ export class AuthMiddleware implements NestMiddleware {
     if (req.headers.authorization) {
       const token = req.headers.authorization.split(' ')[1]
       if (token) {
-        req.user = await getAuth().verifyIdToken(token, true)
-        this.logger.log(`User ${req.user.uid} authorized`)
+        req.user = await getAuth()
+          .verifyIdToken(token, true)
+          .then((user) => {
+            this.logger.log(`User ${user.uid} ${user.name} authorized`)
+            return user
+          })
+          .catch((e) => {
+            this.logger.error('Verify ID token error', e)
+            return null
+          })
       }
     }
     next()
