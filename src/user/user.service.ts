@@ -2,7 +2,7 @@ import { InjectModel } from '@hirasawa_au/nestjs-typegoose'
 import { Injectable } from '@nestjs/common'
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
 import { auth } from 'firebase-admin'
-import { FilterQuery, Types } from 'mongoose'
+import { FilterQuery } from 'mongoose'
 import { UserModel } from 'src/models/user.model'
 
 @Injectable()
@@ -14,7 +14,7 @@ export class UserService {
 
   create(id: string, displayName: string) {
     return this.userModel.create({
-      id,
+      _id: id,
       displayName,
     })
   }

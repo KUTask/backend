@@ -4,7 +4,6 @@ import { getModelForClass } from '@typegoose/typegoose'
 import { UserModel } from 'src/models/user.model'
 import { UserService } from './user.service'
 import * as admin from 'firebase-admin'
-import { Types } from 'mongoose'
 
 jest.mock('firebase-admin', () => {
   const uid = 'uid'
@@ -48,7 +47,7 @@ describe('UserService', () => {
       const displayName = 'displayName'
       await service.create(id, displayName)
       expect(userModel.create).toBeCalledWith({
-        id,
+        _id: id,
         displayName,
       })
     })
