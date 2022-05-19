@@ -49,6 +49,19 @@ describe('UserService', () => {
       expect(userModel.create).toBeCalledWith({
         _id: id,
         displayName,
+        expiredAt: expect.any(Date),
+      })
+    })
+
+    it('should create user not expired if verified email', async () => {
+      userModel.create = jest.fn()
+      const id = 'uid'
+      const displayName = 'displayName'
+      await service.create(id, displayName, true)
+      expect(userModel.create).toBeCalledWith({
+        _id: id,
+        displayName,
+        expiredAt: null,
       })
     })
   })
@@ -118,6 +131,23 @@ describe('UserService', () => {
         id,
         {
           displayName,
+        },
+        { new: true },
+      )
+    })
+  })
+
+  describe('updateVerifiedEmail', () => {
+    it('should verify email', async () => {
+      userModel.findByIdAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      })
+      const id = '35l7ARKMTKVsiavIq6KjDz5yEh92'
+      await service.updateVerifiedEmail(id)
+      expect(userModel.findByIdAndUpdate).toBeCalledWith(
+        id,
+        {
+          expiredAt: null,
         },
         { new: true },
       )
