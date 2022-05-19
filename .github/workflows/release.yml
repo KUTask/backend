@@ -40,6 +40,6 @@ jobs:
         CR_PAT: ${{ secrets.CR_PAT }}
     - name: Build And Publishing image
       run: |
-        docker build . --tag ghcr.io/KUTask/backend-alpha:latest
-        docker push ghcr.io/KUTask/backend-alpha:latest
+        docker build . --tag ghcr.io/kutask/backend-alpha:latest
+        docker push ghcr.io/kutask/backend-alpha:latest
   
