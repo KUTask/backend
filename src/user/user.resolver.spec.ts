@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import mercurius from 'mercurius'
 import { UserResolver } from './user.resolver'
 import { UserService } from './user.service'
 
@@ -47,6 +48,19 @@ describe('UserResolver', () => {
     it('should update display name', async () => {
       await resolver.updateDisplayName({ uid: 'uid' }, 'displayName')
       expect(service.updateDisplayName).toBeCalled()
+    })
+  })
+
+  describe('updateVerifiedEmail', () => {
+    it('should error if user is not verified', async () => {
+      await expect(
+        resolver.verifyEmail({ uid: 'uid', email_verified: false }),
+      ).rejects.toThrow(mercurius.ErrorWithProps)
+    })
+
+    it('should update verified email', async () => {
+      await resolver.verifyEmail({ uid: 'uid', email_verified: true })
+      expect(service.updateVerifiedEmail).toBeCalled()
     })
   })
 
