@@ -55,6 +55,10 @@ export class UserService {
       .exec()
   }
 
+  deleteFirebaseUser(id: string) {
+    return auth().deleteUser(id)
+  }
+
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async clearExpiredUser() {
     this.logger.log('Clear user expired start')
