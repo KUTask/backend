@@ -18,7 +18,8 @@ export class UserResolver {
   @Directive('@auth')
   async createUser(
     @User() user: Pick<DecodedIdToken, 'uid' | 'name'>,
-    @Args({ type: () => String, nullable: true }) displayName?: string,
+    @Args({ type: () => String, nullable: true, name: 'displayName' })
+    displayName?: string,
   ) {
     displayName = displayName ?? user.name
     const hasUser = await this.userService.hasUser(user.uid)
