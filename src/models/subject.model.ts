@@ -4,9 +4,13 @@ export class SubjectModel {
   @prop({ required: true })
   _id: string
 
-  @prop({ required: true })
-  subjectNameTh: string
+  @prop({ required: true, alias: 'subjectNameTh' })
+  subject_name_th: string
 
-  @prop({ required: true })
-  subjectNameEn: string
+  subjectNameTh?: string
+
+  @prop({ required: true, alias: 'subjectNameEn' })
+  subject_name_en: string
+
+  subjectNameEn?: string
 }
