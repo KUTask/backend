@@ -44,11 +44,11 @@ describe('UserService', () => {
   describe('create', () => {
     it('should create a user', async () => {
       userModel.create = jest.fn()
-      const uid = 'uid'
+      const id = 'uid'
       const displayName = 'displayName'
-      await service.create(uid, displayName)
+      await service.create(id, displayName)
       expect(userModel.create).toBeCalledWith({
-        uid,
+        id,
         displayName,
       })
     })
@@ -59,20 +59,9 @@ describe('UserService', () => {
       userModel.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(null),
       })
-      const id = new Types.ObjectId('62847e792d8cb34bd2f2a107')
+      const id = '35l7ARKMTKVsiavIq6KjDz5yEh92'
       await service.findById(id)
       expect(userModel.findById).toBeCalledWith(id)
-    })
-  })
-
-  describe('findByUid', () => {
-    it('should find a user by uid', async () => {
-      userModel.findOne = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(null),
-      })
-      const uid = 'uid'
-      await service.findByUid(uid)
-      expect(userModel.findOne).toBeCalledWith({ uid })
     })
   })
 
@@ -112,9 +101,27 @@ describe('UserService', () => {
       userModel.count = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(0),
       })
-      const uid = 'uid'
+      const uid = '35l7ARKMTKVsiavIq6KjDz5yEh92'
       const result = await service.hasUser(uid)
       expect(result).toBeFalsy()
+    })
+  })
+
+  describe('updateDisplayName', () => {
+    it('should update display name', async () => {
+      userModel.findByIdAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      })
+      const id = '35l7ARKMTKVsiavIq6KjDz5yEh92'
+      const displayName = 'displayName'
+      await service.updateDisplayName(id, displayName)
+      expect(userModel.findByIdAndUpdate).toBeCalledWith(
+        id,
+        {
+          displayName,
+        },
+        { new: true },
+      )
     })
   })
 

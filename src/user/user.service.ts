@@ -12,19 +12,15 @@ export class UserService {
     private readonly userModel: ReturnModelType<typeof UserModel>,
   ) {}
 
-  create(uid: string, displayName: string) {
+  create(id: string, displayName: string) {
     return this.userModel.create({
-      uid,
+      id,
       displayName,
     })
   }
 
-  findById(id: Types.ObjectId): Promise<DocumentType<UserModel>> {
+  findById(id: string): Promise<DocumentType<UserModel>> {
     return this.userModel.findById(id).exec()
-  }
-
-  findByUid(uid: string): Promise<DocumentType<UserModel>> {
-    return this.userModel.findOne({ uid }).exec()
   }
 
   find(query?: FilterQuery<DocumentType<UserModel>>) {
@@ -37,8 +33,14 @@ export class UserService {
     return this.create(payload.uid, payload.name)
   }
 
-  async hasUser(uid: string) {
-    const count = await this.userModel.count({ uid }).exec()
+  async hasUser(id: string) {
+    const count = await this.userModel.count({ id }).exec()
     return !!count
+  }
+
+  updateDisplayName(id: string, displayName: string) {
+    return this.userModel
+      .findByIdAndUpdate(id, { displayName }, { new: true })
+      .exec()
   }
 }

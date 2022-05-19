@@ -42,6 +42,14 @@ describe('UserResolver', () => {
       expect(service.create).toBeCalled()
     })
   })
+
+  describe('updateDisplayName', () => {
+    it('should update display name', async () => {
+      await resolver.updateDisplayName({ uid: 'uid' }, 'displayName')
+      expect(service.updateDisplayName).toBeCalled()
+    })
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
