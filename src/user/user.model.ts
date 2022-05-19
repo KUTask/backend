@@ -6,8 +6,5 @@ export class UserType {
   id: string
 
   @Field()
-  uid: string
-
-  @Field()
   displayName: string
 }

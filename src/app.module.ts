@@ -16,6 +16,7 @@ import { TypegooseModule } from '@hirasawa_au/nestjs-typegoose'
 import { TypegooseConfig } from './configs/typegoose.config'
 import { AuthMiddleware } from './auth/auth.middleware'
 import { UserModule } from './user/user.module'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UserModule } from './user/user.module'
       useClass: TypegooseConfig,
     }),
     UserModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

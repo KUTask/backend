@@ -14,6 +14,8 @@ jest.mock('firebase-admin', () => {
       uid,
       name,
     }),
+
+    deleteUser: jest.fn(),
   }
 
   return {
@@ -49,6 +51,19 @@ describe('UserService', () => {
       expect(userModel.create).toBeCalledWith({
         _id: id,
         displayName,
+        expiredAt: expect.any(Date),
+      })
+    })
+
+    it('should create user not expired if verified email', async () => {
+      userModel.create = jest.fn()
+      const id = 'uid'
+      const displayName = 'displayName'
+      await service.create(id, displayName, true)
+      expect(userModel.create).toBeCalledWith({
+        _id: id,
+        displayName,
+        expiredAt: null,
       })
     })
   })
@@ -121,6 +136,49 @@ describe('UserService', () => {
         },
         { new: true },
       )
+    })
+  })
+
+  describe('updateVerifiedEmail', () => {
+    it('should update verified email', async () => {
+      userModel.findByIdAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      })
+      const id = '35l7ARKMTKVsiavIq6KjDz5yEh92'
+      await service.updateVerifiedEmail(id)
+      expect(userModel.findByIdAndUpdate).toBeCalledWith(
+        id,
+        {
+          expiredAt: null,
+        },
+        { new: true },
+      )
+    })
+  })
+
+  describe('deleteFirebaseUser', () => {
+    it('should delete firebase user', async () => {
+      const mockedDeleteUser = admin.auth().deleteUser
+      const id = 'id'
+      await service.deleteFirebaseUser(id)
+      expect(mockedDeleteUser).toBeCalledWith(id)
+    })
+  })
+
+  describe('clearExpiredUser', () => {
+    it('should clear expired user', async () => {
+      const doc = {
+        _id: 'id',
+        delete: jest.fn(),
+      }
+      const docs = [doc]
+      userModel.find = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(docs),
+      })
+
+      await service.clearExpiredUser()
+      expect(doc.delete).toBeCalled()
     })
   })
 

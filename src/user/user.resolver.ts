@@ -1,5 +1,6 @@
 import { Directive, Mutation, Resolver, Query, Args } from '@nestjs/graphql'
 import { DecodedIdToken } from 'firebase-admin/auth'
+import mercurius from 'mercurius'
 import { User } from './user.decorator'
 import { UserType } from './user.model'
 import { UserService } from './user.service'
@@ -17,7 +18,7 @@ export class UserResolver {
   @Mutation(() => UserType, { name: 'userCreateUser' })
   @Directive('@auth')
   async createUser(
-    @User() user: Pick<DecodedIdToken, 'uid' | 'name'>,
+    @User() user: Pick<DecodedIdToken, 'uid' | 'name' | 'email_verified'>,
     @Args({ type: () => String, nullable: true, name: 'displayName' })
     displayName?: string,
   ) {
@@ -38,5 +39,28 @@ export class UserResolver {
     @Args({ type: () => String, name: 'displayName' }) displayName: string,
   ) {
     return this.userService.updateDisplayName(user.uid, displayName)
+  }
+
+  @Mutation(() => UserType, {
+    name: 'userVerifyEmail',
+    description: 'Check verify from id token',
+  })
+  @Directive('@auth')
+  async verifyEmail(
+    @User() user: Pick<DecodedIdToken, 'uid' | 'email_verified'>,
+  ) {
+    if (!user.email_verified) {
+      return Promise.reject(
+        new mercurius.ErrorWithProps(
+          'Email is not verified',
+          {
+            code: 'EMAIL_NOT_VERIFIED',
+          },
+          400,
+        ),
+      )
+    }
+
+    return this.userService.updateVerifiedEmail(user.uid)
   }
 }
