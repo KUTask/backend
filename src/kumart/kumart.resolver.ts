@@ -7,7 +7,7 @@ import { KumartService } from './kumart.service'
 export class KumartResolver {
   constructor(private readonly kumartService: KumartService) {}
 
-  @Query(() => [SectionType], { name: 'sections' })
+  @Query(() => [SectionType], { name: 'kumartSections' })
   @Directive('@auth')
   sections(@Args() { username, password }: KuAuthArgs): Promise<SectionType[]> {
     return this.kumartService.getRegisteredCourses(username, password)
