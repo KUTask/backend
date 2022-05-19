@@ -16,9 +16,6 @@ import { TypegooseModule } from '@hirasawa_au/nestjs-typegoose'
 import { TypegooseConfig } from './configs/typegoose.config'
 import { AuthMiddleware } from './auth/auth.middleware'
 import { UserModule } from './user/user.module'
-import { FirebaseAdminModule } from '@aginix/nestjs-firebase-admin'
-import { credential } from 'firebase-admin'
-import { join } from 'path'
 
 @Module({
   imports: [
@@ -35,11 +32,6 @@ import { join } from 'path'
       useClass: TypegooseConfig,
     }),
     UserModule,
-    FirebaseAdminModule.forRootAsync({
-      useFactory: () => ({
-        credential: credential.cert(join(process.cwd(), 'firebase.json')),
-      }),
-    }),
   ],
   controllers: [AppController],
   providers: [AppService],
