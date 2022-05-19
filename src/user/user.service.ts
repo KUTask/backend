@@ -65,7 +65,19 @@ export class UserService {
   async clearExpiredUser() {
     this.logger.log('Clear user expired start')
     const todayDate = new Date()
-    await this.userModel.deleteMany({ expiredAt: { $lte: todayDate } }).exec()
+    const expiredUser: DocumentType<UserModel>[] = await this.userModel
+      .find({ expiredAt: { $lte: todayDate } })
+      .select('_id')
+      .exec()
+
+    await Promise.all(
+      expiredUser.map(async (doc) => {
+        this.logger.log(`Delete user ${doc._id}`)
+        await doc.delete()
+        await this.deleteFirebaseUser(doc._id)
+      }),
+    )
+
     this.logger.log('Clear user expired end')
   }
 }

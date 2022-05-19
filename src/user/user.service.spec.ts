@@ -146,11 +146,27 @@ describe('UserService', () => {
       )
     })
   })
+
   describe('deleteFirebaseUser', () => {
     it('should delete firebase user', async () => {
       const uid = 'uid'
       await service.deleteFirebaseUser(uid)
       expect(firebaseAuthService.deleteUser).toBeCalledWith(uid)
+    })
+  })
+
+  describe('clearExpiredUser', () => {
+    it('should clear expired user', async () => {
+      userModel.find = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue([{ _id: 'uid', delete: jest.fn() }]),
+      })
+
+      service.deleteFirebaseUser = jest.fn()
+
+      await service.clearExpiredUser()
+      expect(userModel.find).toBeCalled()
+      expect(service.deleteFirebaseUser).toBeCalledWith('uid')
     })
   })
 
