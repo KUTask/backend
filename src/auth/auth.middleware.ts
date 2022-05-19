@@ -1,9 +1,11 @@
-import { Injectable, NestMiddleware } from '@nestjs/common'
+import { Injectable, Logger, NestMiddleware } from '@nestjs/common'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { DecodedIdToken, getAuth } from 'firebase-admin/auth'
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
+  private readonly logger = new Logger(AuthMiddleware.name)
+
   async use(
     req: FastifyRequest & { user?: DecodedIdToken },
     res: FastifyReply,
@@ -13,6 +15,7 @@ export class AuthMiddleware implements NestMiddleware {
       const token = req.headers.authorization.split(' ')[1]
       if (token) {
         req.user = await getAuth().verifyIdToken(token, true)
+        this.logger.log(`User ${req.user.uid} authorized`)
       }
     }
     next()
