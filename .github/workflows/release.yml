@@ -1,0 +1,45 @@
+name: Release [Dev]
+
+on: 
+  push:
+    branches:
+      - "main"
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Module
+        run: npm i
+      - name: Lint
+        run: npm run lint
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Module
+        run: npm i
+      - name: "Test"
+        run: npm run test:cov
+
+  release:
+    runs-on: ubuntu-22.04
+    needs: 
+      - "lint"
+      - "test"
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login Docker
+      run: |
+        echo $CR_PAT | docker login ghcr.io -u KUTask --password-stdin
+      env:
+        CR_PAT: ${{ secrets.CR_PAT }}
+    - name: Build And Publishing image
+      run: |
+        docker build . --tag ghcr.io/KUTask/backend-alpha:latest
+        docker push ghcr.io/KUTask/backend-alpha:latest
+  
