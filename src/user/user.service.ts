@@ -1,5 +1,6 @@
 import { InjectModel } from '@hirasawa_au/nestjs-typegoose'
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
+import { Cron, CronExpression } from '@nestjs/schedule'
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
 import * as dayjs from 'dayjs'
 import { auth } from 'firebase-admin'
@@ -8,6 +9,8 @@ import { UserModel } from 'src/models/user.model'
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger(UserService.name)
+
   constructor(
     @InjectModel(UserModel)
     private readonly userModel: ReturnModelType<typeof UserModel>,
@@ -50,5 +53,13 @@ export class UserService {
     return this.userModel
       .findByIdAndUpdate(id, { expiredAt: null }, { new: true })
       .exec()
+  }
+
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async clearExpiredUser() {
+    this.logger.log('Clear user expired start')
+    const todayDate = new Date()
+    await this.userModel.deleteMany({ expiredAt: { $lte: todayDate } }).exec()
+    this.logger.log('Clear user expired end')
   }
 }
