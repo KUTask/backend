@@ -5,7 +5,7 @@ import { SectionTypeModel } from './section-type.model'
 import { SubjectModel } from './subject.model'
 import { TaskModel } from './task.model'
 
-class CourseDate {
+export class CourseDate {
   @prop()
   day: string
 

@@ -18,6 +18,7 @@ import { AuthMiddleware } from './auth/auth.middleware'
 import { UserModule } from './user/user.module'
 import { ScheduleModule } from '@nestjs/schedule'
 import { KumartModule } from './kumart/kumart.module'
+import { SectionModule } from './section/section.module'
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { KumartModule } from './kumart/kumart.module'
     UserModule,
     ScheduleModule.forRoot(),
     KumartModule,
+    SectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

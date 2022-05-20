@@ -7,5 +7,6 @@ import { UserResolver } from './user.resolver'
 @Module({
   imports: [TypegooseModule.forFeature([UserModel])],
   providers: [UserService, UserResolver],
+  exports: [UserService],
 })
 export class UserModule {}

@@ -1,4 +1,4 @@
-import { index, modelOptions, prop, Ref } from '@typegoose/typegoose'
+import { modelOptions, prop, Ref } from '@typegoose/typegoose'
 import * as dayjs from 'dayjs'
 import { SectionModel } from './section.model'
 
@@ -21,6 +21,6 @@ export class UserModel {
 
   expiredAt?: Date
 
-  @prop({ ref: () => SectionModel })
+  @prop({ ref: () => SectionModel, default: [] })
   sections: Ref<SectionModel>[]
 }
