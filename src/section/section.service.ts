@@ -26,6 +26,6 @@ export class SectionService {
 
     const populatedUser = await user?.populate('sections')
 
-    return <DocumentType<SectionModel>[]>populatedUser?.sections
+    return <DocumentType<SectionModel>[]>populatedUser?.sections ?? null
   }
 }

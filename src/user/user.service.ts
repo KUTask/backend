@@ -87,7 +87,7 @@ export class UserService {
       .populate('sections')
       .exec()
 
-    return <DocumentType<SectionModel>[]>user?.sections
+    return <DocumentType<SectionModel>[]>user?.sections ?? null
   }
 
   registerSections(userId: string, sections: Types.ObjectId[]) {
