@@ -4,7 +4,8 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
 import * as dayjs from 'dayjs'
 import { auth } from 'firebase-admin'
-import { FilterQuery } from 'mongoose'
+import { FilterQuery, Types } from 'mongoose'
+import { SectionModel } from 'src/models/section.model'
 import { UserModel } from 'src/models/user.model'
 
 @Injectable()
@@ -77,5 +78,31 @@ export class UserService {
     )
 
     this.logger.log('Clear user expired end')
+  }
+
+  async findSectionsByUser(userId: string) {
+    const user = await this.userModel
+      .findById(userId)
+      .select('sections')
+      .populate('sections')
+      .exec()
+
+    return <DocumentType<SectionModel>[]>user?.sections ?? null
+  }
+
+  registerSections(userId: string, sections: Types.ObjectId[]) {
+    return this.userModel
+      .findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            sections: {
+              $each: sections,
+            },
+          },
+        },
+        { new: true },
+      )
+      .exec()
   }
 }

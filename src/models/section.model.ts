@@ -1,9 +1,11 @@
 import { index, modelOptions, prop, Ref } from '@typegoose/typegoose'
 import { Types } from 'mongoose'
+import { LectureMediaModel } from './lecture-media.model'
 import { SectionTypeModel } from './section-type.model'
 import { SubjectModel } from './subject.model'
+import { TaskModel } from './task.model'
 
-class CourseDate {
+export class CourseDate {
   @prop()
   day: string
 
@@ -52,4 +54,12 @@ export class SectionModel {
   teacher_names_en: string[]
 
   teacherNamesEn?: string[]
+
+  @prop({ ref: () => TaskModel })
+  tasks: Ref<TaskModel>[]
+
+  @prop({ ref: () => LectureMediaModel, alias: 'lectureMedias' })
+  lecture_medias: Ref<LectureMediaModel>[]
+
+  lectureMedias?: Ref<LectureMediaModel>[]
 }

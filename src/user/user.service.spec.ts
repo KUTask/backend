@@ -4,6 +4,7 @@ import { getModelForClass } from '@typegoose/typegoose'
 import { UserModel } from 'src/models/user.model'
 import { UserService } from './user.service'
 import * as admin from 'firebase-admin'
+import { Types } from 'mongoose'
 
 jest.mock('firebase-admin', () => {
   const uid = 'uid'
@@ -179,6 +180,56 @@ describe('UserService', () => {
 
       await service.clearExpiredUser()
       expect(doc.delete).toBeCalled()
+    })
+  })
+
+  describe('findSectionsByUser', () => {
+    it('should find sections by user', async () => {
+      userModel.findById = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        populate: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue({ sections: [] }),
+      })
+
+      const result = await service.findSectionsByUser('id')
+      expect(userModel.findById).toBeCalledWith('id')
+      expect(result).not.toBeNull()
+    })
+
+    it('should return null if user does not exist', async () => {
+      userModel.findById = jest.fn().mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        populate: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(null),
+      })
+
+      const result = await service.findSectionsByUser('id')
+      expect(userModel.findById).toBeCalledWith('id')
+      expect(result).toBeNull()
+    })
+  })
+
+  describe('registerSections', () => {
+    it('should register sections', async () => {
+      userModel.findByIdAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      })
+
+      const sections = [new Types.ObjectId(), new Types.ObjectId()]
+      const userId = 'id'
+      await service.registerSections(userId, sections)
+
+      expect(userModel.findByIdAndUpdate).toBeCalledWith(
+        userId,
+        {
+          $push: {
+            sections: {
+              $each: sections,
+            },
+          },
+        },
+        { new: true },
+      )
     })
   })
 

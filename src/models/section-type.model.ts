@@ -8,9 +8,6 @@ import { Types } from 'mongoose'
 })
 @index({ section_type_id: 1 }, { unique: true })
 export class SectionTypeModel {
-  /**
-   * @description Section type
-   */
   @prop({ auto: true })
   _id: Types.ObjectId
 
