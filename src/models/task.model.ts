@@ -1,6 +1,7 @@
 import { modelOptions, prop, Ref } from '@typegoose/typegoose'
 import { Types } from 'mongoose'
 import { SectionModel } from './section.model'
+import { UserModel } from './user.model'
 
 @modelOptions({
   schemaOptions: {
@@ -25,10 +26,10 @@ export class TaskModel {
 
   dueDate?: Date
 
+  @prop({ ref: () => UserModel, required: true, type: String })
+  user: Ref<UserModel, string>
+
   @prop({
-    localField: 'section',
-    foreignField: '_id',
-    justOne: true,
     ref: () => SectionModel,
   })
   section: Ref<SectionModel>

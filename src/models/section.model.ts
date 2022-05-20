@@ -37,7 +37,7 @@ export class SectionModel {
   @prop({ ref: () => SubjectModel })
   subject: Ref<SubjectModel>
 
-  @prop({ ref: () => SectionTypeModel, alias: 'sectionType' })
+  @prop({ ref: () => SectionTypeModel, required: true })
   section_type: Ref<SectionTypeModel>
 
   sectionType?: Ref<SectionTypeModel>
@@ -55,7 +55,12 @@ export class SectionModel {
 
   teacherNamesEn?: string[]
 
-  @prop({ ref: () => TaskModel })
+  @prop({
+    ref: () => TaskModel,
+    localField: 'tasks',
+    foreignField: '_id',
+    justOne: false,
+  })
   tasks: Ref<TaskModel>[]
 
   @prop({ ref: () => LectureMediaModel, alias: 'lectureMedias' })
