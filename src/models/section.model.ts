@@ -1,26 +1,39 @@
-import { modelOptions, prop, Ref } from '@typegoose/typegoose'
+import { index, modelOptions, prop, Ref } from '@typegoose/typegoose'
+import { Types } from 'mongoose'
 import { SectionTypeModel } from './section-type.model'
 import { SubjectModel } from './subject.model'
+
+class CourseDate {
+  @prop()
+  day: string
+
+  @prop()
+  room: string
+
+  @prop()
+  time: string
+}
 
 @modelOptions({
   schemaOptions: {
     collection: 'sections',
   },
 })
+@index({ section_id: 1 }, { unique: true })
 export class SectionModel {
   /**
    * @description Section ID
    */
-  @prop({ required: true })
-  _id: string
+  @prop({ auto: true })
+  _id: Types.ObjectId
+
+  @prop({ alias: 'sectionId', required: true })
+  section_id: string
+
+  sectionId: string
 
   @prop({ ref: () => SubjectModel })
   subject: Ref<SubjectModel>
-
-  @prop({ required: true, alias: 'maxCredit' })
-  max_credit: number
-
-  maxCredit?: number
 
   @prop({ ref: () => SectionTypeModel, alias: 'sectionType' })
   section_type: Ref<SectionTypeModel>
@@ -28,20 +41,15 @@ export class SectionModel {
   sectionType?: Ref<SectionTypeModel>
 
   @prop({ required: true })
-  coursedate: string
+  coursedate: CourseDate[]
 
-  @prop({ required: true, alias: 'teacherName' })
-  teacher_name: string
+  @prop({ required: true, alias: 'teacherNames' })
+  teacher_names: string[]
 
-  teacherName?: string
+  teacherNames?: string[]
 
-  @prop({ required: true, alias: 'teacherNameEn' })
-  teacher_name_en: string
+  @prop({ alias: 'teacherNamesEn' })
+  teacher_names_en: string[]
 
-  teacherNameEn?: string
-
-  @prop({ required: true, alias: 'roomNameTh' })
-  room_name_th: string
-
-  roomNameTh?: string
+  teacherNamesEn?: string[]
 }

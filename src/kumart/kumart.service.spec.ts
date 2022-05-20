@@ -90,4 +90,73 @@ describe('KumartService', () => {
       expect(result).toEqual([{ sectionId: 0 }])
     })
   })
+
+  describe('getSectionDetail', () => {
+    it('should findOneAndUpdate be called correctly', async () => {
+      subjectModel.findOneAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({ _id: 'subjectModelId' }),
+      })
+      sectionModel.findOneAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({ _id: 'sectionModelId' }),
+      })
+      sectionTypeModel.findOneAndUpdate = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue({ _id: 'sectionTypeModelId' }),
+      })
+
+      const sections = [
+        {
+          sectionId: 0,
+          schedules: [],
+          teacher: [{ nameTh: 'nameTh', nameEn: 'nameEn' }] as any[],
+          sectionType: 'sectionType',
+          sectionTypeEn: 'sectionTypeEn',
+          sectionTypeTh: 'sectionTypeTh',
+          subjectCode: 'subjectCode',
+          subjectNameEn: 'subjectNameEn',
+          subjectNameTh: 'subjectNameTh',
+        },
+      ]
+      await service.saveToDb(sections)
+      expect(subjectModel.findOneAndUpdate).toBeCalledWith(
+        { subject_code: sections[0].subjectCode },
+        {
+          subject_name_en: sections[0].subjectNameEn,
+          subject_name_th: sections[0].subjectNameTh,
+        },
+        {
+          new: true,
+          upsert: true,
+        },
+      )
+
+      expect(sectionTypeModel.findOneAndUpdate).toBeCalledWith(
+        { section_type_id: sections[0].sectionType },
+        {
+          section_type_en: sections[0].sectionTypeEn,
+          section_type_th: sections[0].sectionTypeTh,
+        },
+        {
+          new: true,
+          upsert: true,
+        },
+      )
+
+      expect(sectionModel.findOneAndUpdate).toBeCalledWith(
+        { section_id: sections[0].sectionId.toString() },
+        {
+          subject: 'subjectModelId',
+          section_type: 'sectionTypeModelId',
+          coursedate: sections[0].schedules,
+          teacher_names: sections[0].teacher.map((teacher) => teacher.nameTh),
+          teacher_names_en: sections[0].teacher.map(
+            (teacher) => teacher.nameEn,
+          ),
+        },
+        {
+          new: true,
+          upsert: true,
+        },
+      )
+    })
+  })
 })
