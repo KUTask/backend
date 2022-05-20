@@ -18,7 +18,11 @@ async function bootstrap() {
   )
 
   initializeApp({
-    credential: credential.cert(join(process.cwd(), 'firebase.json')),
+    credential: credential.cert({
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      projectId: process.env.FIREBASE_PROJECT_ID,
+    }),
   })
 
   await app.register(fastifyCookie, {
