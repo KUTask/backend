@@ -7,7 +7,6 @@ import { SectionModel } from './section.model'
     collection: 'users',
   },
 })
-@index({ uid: 1 }, { unique: true })
 export class UserModel {
   @prop({ required: true })
   _id: string
