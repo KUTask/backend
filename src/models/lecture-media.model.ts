@@ -4,26 +4,24 @@ import { SectionModel } from './section.model'
 
 @modelOptions({
   schemaOptions: {
-    collection: 'tasks',
+    collection: 'lecture_medias',
   },
 })
-export class TaskModel {
+export class LectureMediaModel {
   @prop({ auto: true })
   _id: Types.ObjectId
 
   @prop({ required: true })
   name: string
 
-  @prop()
-  description?: string
+  @prop({ required: true })
+  link: string
 
   @prop({ required: true })
-  tags: string[]
+  icon: string
 
-  @prop({ required: true, alias: 'dueDate' })
-  due_date: Date
-
-  dueDate?: Date
+  @prop()
+  description?: string
 
   @prop({
     localField: 'section',
