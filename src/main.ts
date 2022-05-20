@@ -9,6 +9,7 @@ import { SwaggerBuilder } from './swagger'
 import { initializeApp } from 'firebase-admin/app'
 import { credential } from 'firebase-admin'
 import { join } from 'path'
+import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap() {
   const port = process.env.PORT ?? 4000
@@ -28,6 +29,8 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   })
+
+  app.useGlobalPipes(new ValidationPipe())
   new SwaggerBuilder(app).build()
   await app.listen(port, '0.0.0.0')
 }
