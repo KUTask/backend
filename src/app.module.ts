@@ -19,6 +19,7 @@ import { UserModule } from './user/user.module'
 import { ScheduleModule } from '@nestjs/schedule'
 import { KumartModule } from './kumart/kumart.module'
 import { SectionModule } from './section/section.module'
+import { TaskModule } from './task/task.module'
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { SectionModule } from './section/section.module'
     ScheduleModule.forRoot(),
     KumartModule,
     SectionModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
