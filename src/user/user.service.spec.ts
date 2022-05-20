@@ -133,7 +133,7 @@ describe('UserService', () => {
       expect(userModel.findByIdAndUpdate).toBeCalledWith(
         id,
         {
-          displayName,
+          display_name: displayName,
         },
         { new: true },
       )

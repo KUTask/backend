@@ -46,7 +46,7 @@ export class UserService {
 
   updateDisplayName(id: string, displayName: string) {
     return this.userModel
-      .findByIdAndUpdate(id, { displayName }, { new: true })
+      .findByIdAndUpdate(id, { display_name: displayName }, { new: true })
       .exec()
   }
 
