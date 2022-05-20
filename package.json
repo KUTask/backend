@@ -37,7 +37,7 @@
     "fastify-swagger": "^5.2.0",
     "firebase-admin": "^10.2.0",
     "graphql": "^16.5.0",
-    "kuwrapper": "^1.2.0",
+    "kuwrapper": "^1.3.0",
     "mercurius": "^9.5.0",
     "mongoose": "^6.3.3",
     "reflect-metadata": "^0.1.13",
