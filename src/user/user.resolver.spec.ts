@@ -22,6 +22,13 @@ describe('UserResolver', () => {
     expect(resolver).toBeDefined()
   })
 
+  describe('user', () => {
+    it('should return user', async () => {
+      await resolver.user({ uid: 'uid' })
+      expect(service.findById).toBeCalledWith('uid')
+    })
+  })
+
   describe('users', () => {
     it('should return users', async () => {
       service.find = jest.fn().mockResolvedValue([])

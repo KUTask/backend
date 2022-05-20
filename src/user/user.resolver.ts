@@ -15,6 +15,12 @@ export class UserResolver {
     return this.userService.find()
   }
 
+  @Query(() => UserType, { name: 'user' })
+  @Directive('@auth')
+  user(@User() user: Pick<DecodedIdToken, 'uid'>) {
+    return this.userService.findById(user.uid)
+  }
+
   @Mutation(() => UserType, { name: 'userCreateUser' })
   @Directive('@auth')
   async createUser(
