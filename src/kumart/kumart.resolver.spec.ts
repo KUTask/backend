@@ -30,4 +30,18 @@ describe('KumartResolver', () => {
       expect(service.getRegisteredCourses).toBeCalledWith(username, password)
     })
   })
+
+  describe('teacher', () => {
+    it('should return teacher', () => {
+      const section = { teacher: [{}] as any[] }
+      expect(resolver.teacher(section)).toEqual(section.teacher)
+    })
+  })
+
+  describe('schedules', () => {
+    it('should return schedules', () => {
+      const section = { schedules: [{}] as any[] }
+      expect(resolver.schedules(section)).toEqual(section.schedules)
+    })
+  })
 })
