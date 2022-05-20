@@ -39,7 +39,7 @@ export class UserService {
   }
 
   async hasUser(id: string) {
-    const count = await this.userModel.count({ id }).exec()
+    const count = await this.userModel.count({ _id: id }).exec()    
     return !!count
   }
 
