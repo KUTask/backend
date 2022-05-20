@@ -10,6 +10,7 @@ import {
 } from '@nestjs/graphql'
 import { DocumentType } from '@typegoose/typegoose'
 import { DecodedIdToken } from 'firebase-admin/auth'
+import { mapKeys, snakeCase } from 'lodash'
 import { Types } from 'mongoose'
 import { TaskModel } from 'src/models/task.model'
 import { SectionSectionType } from 'src/section/gql/section-type.gql'
@@ -52,8 +53,11 @@ export class TaskResolver {
   @UseInterceptors(PermissionInterceptor)
   updateTask(@Args() dto: UpdateTaskArgs) {
     const { id, ...field } = dto
-    const updateField = { ...field, dueDate: new Date(field.dueDate) }
-    return this.taskService.update(new Types.ObjectId(id), updateField)
+    const updateField = { ...field, dueDate: new Date(+field.dueDate) }
+    return this.taskService.update(
+      new Types.ObjectId(id),
+      mapKeys(updateField, (_, key) => snakeCase(key)),
+    )
   }
 
   @Mutation(() => TaskTaskType, {
