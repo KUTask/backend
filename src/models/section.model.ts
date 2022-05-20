@@ -2,6 +2,7 @@ import { index, modelOptions, prop, Ref } from '@typegoose/typegoose'
 import { Types } from 'mongoose'
 import { SectionTypeModel } from './section-type.model'
 import { SubjectModel } from './subject.model'
+import { TaskModel } from './task.model'
 
 class CourseDate {
   @prop()
@@ -52,4 +53,7 @@ export class SectionModel {
   teacher_names_en: string[]
 
   teacherNamesEn?: string[]
+
+  @prop({ ref: () => TaskModel })
+  tasks: Ref<TaskModel>[]
 }
