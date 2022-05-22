@@ -30,6 +30,14 @@ describe('SectionResolver', () => {
     })
   })
 
+  describe('section', () => {
+    it('should service.findById be called with correct value', async () => {
+      const id = new Types.ObjectId()
+      await resolver.section(id.toHexString())
+      expect(service.findById).toHaveBeenCalledWith(id)
+    })
+  })
+
   describe('register', () => {
     it('should service.registerSections be called with correct value', async () => {
       const uid = 'uid'
@@ -66,6 +74,30 @@ describe('SectionResolver', () => {
 
       await resolver.sectionType(section)
       expect(section.populate).toHaveBeenCalledWith('section_type')
+    })
+  })
+
+  describe('tasks', () => {
+    it('should popuate correctly', async () => {
+      const section = {
+        populate: jest.fn().mockReturnThis(),
+        tasks: [],
+      }
+
+      await resolver.tasks(section)
+      expect(section.populate).toHaveBeenCalledWith('tasks')
+    })
+  })
+
+  describe('lectureMedias', () => {
+    it('should popuate correctly', async () => {
+      const section = {
+        populate: jest.fn().mockReturnThis(),
+        lectureMedias: [],
+      }
+
+      await resolver.lectureMedias(section)
+      expect(section.populate).toHaveBeenCalledWith('lecture_medias')
     })
   })
 })
