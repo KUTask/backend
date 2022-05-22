@@ -1,5 +1,6 @@
 import { modelOptions, prop, Ref } from '@typegoose/typegoose'
 import { Types } from 'mongoose'
+import { BaseModel } from './base.model'
 import { SectionModel } from './section.model'
 import { UserModel } from './user.model'
 
@@ -8,7 +9,7 @@ import { UserModel } from './user.model'
     collection: 'tasks',
   },
 })
-export class TaskModel {
+export class TaskModel extends BaseModel {
   @prop({ auto: true })
   _id: Types.ObjectId
 

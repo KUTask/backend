@@ -49,14 +49,14 @@ describe('TaskResolver', () => {
         },
         { uid: user },
       )
-      expect(service.create).toHaveBeenCalledWith(
+      expect(service.create).toHaveBeenCalledWith({
         name,
         section,
-        new Date(+dueDate),
+        due_date: new Date(+dueDate),
         tags,
         user,
         description,
-      )
+      })
     })
   })
 

@@ -38,14 +38,14 @@ export class TaskResolver {
     @Args() dto: CreateTaskArgs,
     @User() user: Pick<DecodedIdToken, 'uid'>,
   ) {
-    return this.taskService.create(
-      dto.name,
-      new Types.ObjectId(dto.section),
-      new Date(+dto.dueDate),
-      dto.tags,
-      user.uid,
-      dto.description,
-    )
+    return this.taskService.create({
+      name: dto.name,
+      section: new Types.ObjectId(dto.section),
+      due_date: new Date(+dto.dueDate),
+      tags: dto.tags,
+      user: user.uid,
+      description: dto.description,
+    })
   }
 
   @Mutation(() => TaskTaskType, { name: 'taskUpdateTask' })
