@@ -19,7 +19,7 @@ import { UserType } from 'src/user/user.model'
 import { CreateTaskArgs } from './args/create-task.args'
 import { UpdateTaskArgs } from './args/update-task.args'
 import { TaskTaskType } from './gql/task.gql'
-import { PermissionInterceptor } from './interceptor/permission.interceptor'
+import { TaskPermissionInterceptor } from './interceptor/task-permission.interceptor'
 import { TaskService } from './task.service'
 
 @Resolver(() => TaskTaskType)
@@ -50,7 +50,7 @@ export class TaskResolver {
 
   @Mutation(() => TaskTaskType, { name: 'taskUpdateTask' })
   @Directive('@auth')
-  @UseInterceptors(PermissionInterceptor)
+  @UseInterceptors(TaskPermissionInterceptor)
   updateTask(@Args() dto: UpdateTaskArgs) {
     const { id, ...field } = dto
     const updateField = { ...field, dueDate: new Date(+field.dueDate) }
@@ -65,7 +65,7 @@ export class TaskResolver {
     description: 'Delete task permanently',
   })
   @Directive('@auth')
-  @UseInterceptors(PermissionInterceptor)
+  @UseInterceptors(TaskPermissionInterceptor)
   deleteTask(@Args({ name: 'id', type: () => String }) id: string) {
     return this.taskService.delete(new Types.ObjectId(id))
   }
