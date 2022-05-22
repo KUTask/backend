@@ -28,7 +28,8 @@
     "!**/*.directive.ts",
     "!**/*.decorator.ts",
     "!**/*.interceptor.ts",
-    "!**/*.gql.ts"
+    "!**/*.gql.ts",
+    "!**/*.args.ts"
   ],
   "coverageThreshold": {
     "src/**/*.service.ts": {

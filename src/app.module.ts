@@ -20,6 +20,7 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { KumartModule } from './kumart/kumart.module'
 import { SectionModule } from './section/section.module'
 import { TaskModule } from './task/task.module'
+import { LectureMediaModule } from './lecture-media/lecture-media.module'
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { TaskModule } from './task/task.module'
     KumartModule,
     SectionModule,
     TaskModule,
+    LectureMediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

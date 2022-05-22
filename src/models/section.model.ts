@@ -63,7 +63,13 @@ export class SectionModel {
   })
   tasks: Ref<TaskModel>[]
 
-  @prop({ ref: () => LectureMediaModel, alias: 'lectureMedias' })
+  @prop({
+    ref: () => LectureMediaModel,
+    alias: 'lectureMedias',
+    localField: 'lecture_medias',
+    foreignField: '_id',
+    justOne: false,
+  })
   lecture_medias: Ref<LectureMediaModel>[]
 
   lectureMedias?: Ref<LectureMediaModel>[]

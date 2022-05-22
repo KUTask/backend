@@ -1,13 +1,15 @@
 import { modelOptions, prop, Ref } from '@typegoose/typegoose'
 import { Types } from 'mongoose'
+import { BaseModel } from './base.model'
 import { SectionModel } from './section.model'
+import { UserModel } from './user.model'
 
 @modelOptions({
   schemaOptions: {
     collection: 'lecture_medias',
   },
 })
-export class LectureMediaModel {
+export class LectureMediaModel extends BaseModel {
   @prop({ auto: true })
   _id: Types.ObjectId
 
@@ -24,10 +26,10 @@ export class LectureMediaModel {
   description?: string
 
   @prop({
-    localField: 'section',
-    foreignField: '_id',
-    justOne: true,
     ref: () => SectionModel,
   })
   section: Ref<SectionModel>
+
+  @prop({ required: true, ref: () => UserModel, type: String })
+  user: Ref<UserModel, string>
 }
