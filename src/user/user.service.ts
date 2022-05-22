@@ -27,6 +27,7 @@ export class UserService {
       _id: id,
       displayName,
       expiredAt: !verifiedEmail ? dayjs().add(1, 'day').toDate() : null,
+      email,
     })
   }
 
