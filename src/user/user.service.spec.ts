@@ -48,11 +48,13 @@ describe('UserService', () => {
       userModel.create = jest.fn()
       const id = 'uid'
       const displayName = 'displayName'
-      await service.create(id, displayName)
+      const email = 'email'
+      await service.create(id, displayName, email)
       expect(userModel.create).toBeCalledWith({
         _id: id,
         displayName,
         expiredAt: expect.any(Date),
+        email,
       })
     })
 
@@ -60,11 +62,13 @@ describe('UserService', () => {
       userModel.create = jest.fn()
       const id = 'uid'
       const displayName = 'displayName'
-      await service.create(id, displayName, true)
+      const email = 'email'
+      await service.create(id, displayName, email, true)
       expect(userModel.create).toBeCalledWith({
         _id: id,
         displayName,
         expiredAt: null,
+        email,
       })
     })
   })
@@ -88,17 +92,6 @@ describe('UserService', () => {
 
       await service.find()
       expect(userModel.find).toBeCalled()
-    })
-  })
-
-  describe('createByAccessToken', () => {
-    it('should craete a user from correct token', async () => {
-      service.create = jest.fn()
-      const token = 'token'
-      await service.createByAccessToken(token)
-
-      expect(admin.auth).toBeCalled()
-      expect(service.create).toBeCalled()
     })
   })
 

@@ -21,6 +21,9 @@ export class UserModel {
 
   expiredAt?: Date
 
+  @prop({ required: true })
+  email: string
+
   @prop({ ref: () => SectionModel, default: [] })
   sections: Ref<SectionModel>[]
 }

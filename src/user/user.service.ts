@@ -17,7 +17,12 @@ export class UserService {
     private readonly userModel: ReturnModelType<typeof UserModel>,
   ) {}
 
-  create(id: string, displayName: string, verifiedEmail = false) {
+  create(
+    id: string,
+    displayName: string,
+    email: string,
+    verifiedEmail = false,
+  ) {
     return this.userModel.create({
       _id: id,
       displayName,
@@ -31,12 +36,6 @@ export class UserService {
 
   find(query?: FilterQuery<DocumentType<UserModel>>) {
     return this.userModel.find(query).exec()
-  }
-
-  async createByAccessToken(token: string) {
-    const payload = await auth().verifyIdToken(token, true)
-
-    return this.create(payload.uid, payload.name)
   }
 
   async hasUser(id: string) {

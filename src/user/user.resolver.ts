@@ -24,7 +24,8 @@ export class UserResolver {
   @Mutation(() => UserType, { name: 'userCreateUser' })
   @Directive('@auth')
   async createUser(
-    @User() user: Pick<DecodedIdToken, 'uid' | 'name' | 'email_verified'>,
+    @User()
+    user: Pick<DecodedIdToken, 'uid' | 'name' | 'email_verified' | 'email'>,
     @Args({ type: () => String, nullable: true, name: 'displayName' })
     displayName?: string,
   ) {
@@ -35,7 +36,12 @@ export class UserResolver {
       return this.userService.findById(user.uid)
     }
 
-    return this.userService.create(user.uid, displayName)
+    return this.userService.create(
+      user.uid,
+      displayName,
+      user.email,
+      user.email_verified,
+    )
   }
 
   @Mutation(() => UserType, { name: 'userUpdateDisplayName' })
