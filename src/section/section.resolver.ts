@@ -54,6 +54,6 @@ export class SectionResolver {
     @Parent() section: Pick<DocumentType<SectionModel>, 'populate'>,
   ) {
     const populatedSection = await section.populate('section_type')
-    return <DocumentType<SectionTypeModel>>populatedSection.sectionType
+    return <DocumentType<SectionTypeModel>>populatedSection.section_type
   }
 }

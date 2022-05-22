@@ -92,4 +92,28 @@ describe('LectureMediaResolver', () => {
       expect(service.delete).toHaveBeenCalledWith(id)
     })
   })
+
+  describe('section', () => {
+    it('should populate correctly', async () => {
+      const doc = {
+        populate: jest.fn().mockReturnThis(),
+        section: null,
+      }
+
+      await resolver.section(doc as any)
+      expect(doc.populate).toHaveBeenCalledWith('section')
+    })
+  })
+
+  describe('user', () => {
+    it('should populate correctly', async () => {
+      const doc = {
+        populate: jest.fn().mockReturnThis(),
+        user: null,
+      }
+
+      await resolver.user(doc as any)
+      expect(doc.populate).toHaveBeenCalledWith('user')
+    })
+  })
 })

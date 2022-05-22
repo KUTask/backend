@@ -26,13 +26,10 @@ export class LectureMediaModel extends BaseModel {
   description?: string
 
   @prop({
-    localField: 'section',
-    foreignField: '_id',
-    justOne: true,
     ref: () => SectionModel,
   })
   section: Ref<SectionModel>
 
-  @prop({ required: true, ref: () => UserModel })
-  user: Ref<UserModel>
+  @prop({ required: true, ref: () => UserModel, type: String })
+  user: Ref<UserModel, string>
 }

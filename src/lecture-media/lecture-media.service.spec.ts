@@ -1,7 +1,6 @@
 import { getModelToken } from '@hirasawa_au/nestjs-typegoose'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getModelForClass } from '@typegoose/typegoose'
-import { Types } from 'mongoose'
 import { LectureMediaModel } from 'src/models/lecture-media.model'
 import { LectureMediaService } from './lecture-media.service'
 

@@ -1,8 +1,20 @@
 import { UseInterceptors } from '@nestjs/common'
-import { Args, Directive, Mutation, Query, Resolver } from '@nestjs/graphql'
+import {
+  Args,
+  Directive,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql'
+import { DocumentType } from '@typegoose/typegoose'
 import { DecodedIdToken } from 'firebase-admin/auth'
 import { Types } from 'mongoose'
+import { LectureMediaModel } from 'src/models/lecture-media.model'
+import { SectionLocalSectionType } from 'src/section/gql/section.gql'
 import { User } from 'src/user/user.decorator'
+import { UserType } from 'src/user/user.model'
 import { CreateLectureMediaArgs } from './args/create-lecture-media.args'
 import { UpdateLectureMediaArgs } from './args/update-lecture-media'
 import { LectureMediaLectureMediaType } from './gql/lecture-media.gql'
@@ -82,5 +94,17 @@ export class LectureMediaResolver {
     @Args({ name: 'id', type: () => String }) id: string,
   ) {
     return this.lectureMediaService.delete(new Types.ObjectId(id))
+  }
+
+  @ResolveField(() => SectionLocalSectionType)
+  async section(@Parent() lectureMedia: DocumentType<LectureMediaModel>) {
+    const populatedLectureMedia = await lectureMedia.populate('section')
+    return populatedLectureMedia.section
+  }
+
+  @ResolveField(() => UserType)
+  async user(@Parent() lectureMedia: DocumentType<LectureMediaModel>) {
+    const populatedLectureMedia = await lectureMedia.populate('user')
+    return populatedLectureMedia.user
   }
 }
