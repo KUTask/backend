@@ -1,19 +1,13 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common'
+import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common'
 import { DecodedIdToken } from 'firebase-admin/auth'
 import mercurius from 'mercurius'
 import { Types } from 'mongoose'
 import { Observable } from 'rxjs'
-import { UpdateTaskArgs } from '../args/update-task.args'
-import { TaskService } from '../task.service'
+import { UpdateTaskArgs } from 'src/task/args/update-task.args'
+import { BaseService } from '../base.service'
 
-@Injectable()
-export class PermissionInterceptor implements NestInterceptor {
-  constructor(private readonly taskService: TaskService) {}
+export class BasePermissionInterceptor implements NestInterceptor {
+  constructor(private readonly baseService: BaseService) {}
 
   async intercept(
     context: ExecutionContext,
@@ -25,7 +19,7 @@ export class PermissionInterceptor implements NestInterceptor {
       DecodedIdToken,
     ] = context.getArgs()
 
-    const permission = await this.taskService
+    const permission = await this.baseService
       .checkPermission(new Types.ObjectId(args.id), user.uid)
       .catch(
         (e: Error) =>
