@@ -9,7 +9,7 @@ import { UserService } from './user.service'
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => UserType, { name: 'users' })
+  @Query(() => [UserType], { name: 'users' })
   @Directive('@auth')
   users() {
     return this.userService.find()
