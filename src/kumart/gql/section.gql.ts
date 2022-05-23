@@ -1,14 +1,14 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
-import { ScheduleType } from './schedule.gql'
-import { TeacherType } from './teacher.gql'
+import { Schedule } from './schedule.gql'
+import { KUTeacher } from './teacher.gql'
 
 @ObjectType()
-export class SectionType {
-  @Field(() => [ScheduleType])
-  schedules: ScheduleType[]
+export class KUSectionType {
+  @Field(() => [Schedule])
+  schedules: Schedule[]
 
-  @Field(() => [TeacherType])
-  teacher: TeacherType[]
+  @Field(() => [KUTeacher])
+  teacher: KUTeacher[]
 
   @Field(() => Int)
   enrollId: number

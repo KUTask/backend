@@ -1,8 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
-import { Schedule } from 'kuwrapper'
 
 @ObjectType()
-export class ScheduleType implements Schedule {
+export class Schedule {
   @Field()
   day: string
 

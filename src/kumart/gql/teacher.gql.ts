@@ -1,8 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { KUTeacher } from 'kuwrapper'
 
 @ObjectType()
-export class TeacherType implements KUTeacher {
+export class KUTeacher {
   @Field()
   title: string
 

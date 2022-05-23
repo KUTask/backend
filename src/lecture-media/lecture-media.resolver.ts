@@ -12,21 +12,21 @@ import { DocumentType } from '@typegoose/typegoose'
 import { DecodedIdToken } from 'firebase-admin/auth'
 import { Types } from 'mongoose'
 import { LectureMediaModel } from 'src/models/lecture-media.model'
-import { SectionLocalSectionType } from 'src/section/gql/section.gql'
+import { LocalSection } from 'src/section/gql/section.gql'
 import { User } from 'src/user/user.decorator'
-import { UserType } from 'src/user/user.model'
+import { User as UserModel } from 'src/user/gql/user.gql'
 import { CreateLectureMediaArgs } from './args/create-lecture-media.args'
 import { UpdateLectureMediaArgs } from './args/update-lecture-media'
-import { LectureMediaLectureMediaType } from './gql/lecture-media.gql'
+import { LectureMedia } from './gql/lecture-media.gql'
 import { LectureMediaPermissionInterceptor } from './interceptor/lecture-media-permission.interceptor'
 import { LectureMediaService } from './lecture-media.service'
 
-@Resolver(() => LectureMediaLectureMediaType)
+@Resolver(() => LectureMedia)
 export class LectureMediaResolver {
   constructor(private readonly lectureMediaService: LectureMediaService) {}
 
-  @Query(() => [LectureMediaLectureMediaType], {
-    name: 'lectureMedialectureMedias',
+  @Query(() => [LectureMedia], {
+    name: 'lectureMedias',
   })
   @Directive('@auth')
   lectureMedialectureMediasType(
@@ -43,8 +43,8 @@ export class LectureMediaResolver {
     )
   }
 
-  @Query(() => LectureMediaLectureMediaType, {
-    name: 'lectureMedialectureMedia',
+  @Query(() => LectureMedia, {
+    name: 'lectureMedia',
   })
   lectureMedialectureMediaType(
     @Args({
@@ -56,8 +56,8 @@ export class LectureMediaResolver {
     return this.lectureMediaService.findById(new Types.ObjectId(id))
   }
 
-  @Mutation(() => LectureMediaLectureMediaType, {
-    name: 'lectureMediaCreateLectureMedia',
+  @Mutation(() => LectureMedia, {
+    name: 'createLectureMedia',
   })
   @Directive('@auth')
   lectureMediaCreateLectureMedia(
@@ -74,8 +74,8 @@ export class LectureMediaResolver {
     })
   }
 
-  @Mutation(() => LectureMediaLectureMediaType, {
-    name: 'lectureMediaUpdateLectureMedia',
+  @Mutation(() => LectureMedia, {
+    name: 'updateLectureMedia',
   })
   @Directive('@auth')
   @UseInterceptors(LectureMediaPermissionInterceptor)
@@ -85,8 +85,8 @@ export class LectureMediaResolver {
     return this.lectureMediaService.update(new Types.ObjectId(id), field)
   }
 
-  @Mutation(() => LectureMediaLectureMediaType, {
-    name: 'lectureMediaDeleteLectureMedia',
+  @Mutation(() => LectureMedia, {
+    name: 'deleteLectureMedia',
     description: 'Delete lectureMedia permanently',
   })
   @Directive('@auth')
@@ -96,13 +96,13 @@ export class LectureMediaResolver {
     return this.lectureMediaService.delete(new Types.ObjectId(id))
   }
 
-  @ResolveField(() => SectionLocalSectionType)
+  @ResolveField(() => LocalSection)
   async section(@Parent() lectureMedia: DocumentType<LectureMediaModel>) {
     const populatedLectureMedia = await lectureMedia.populate('section')
     return populatedLectureMedia.section
   }
 
-  @ResolveField(() => UserType)
+  @ResolveField(() => UserModel)
   async user(@Parent() lectureMedia: DocumentType<LectureMediaModel>) {
     const populatedLectureMedia = await lectureMedia.populate('user')
     return populatedLectureMedia.user

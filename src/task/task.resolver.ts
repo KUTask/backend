@@ -13,26 +13,26 @@ import { DecodedIdToken } from 'firebase-admin/auth'
 import { mapKeys, snakeCase } from 'lodash'
 import { Types } from 'mongoose'
 import { TaskModel } from 'src/models/task.model'
-import { SectionSectionType } from 'src/section/gql/section-type.gql'
+import { SectionType } from 'src/section/gql/section-type.gql'
 import { User } from 'src/user/user.decorator'
-import { UserType } from 'src/user/user.model'
+import { User as UserModel } from 'src/user/gql/user.gql'
 import { CreateTaskArgs } from './args/create-task.args'
 import { UpdateTaskArgs } from './args/update-task.args'
-import { TaskTaskType } from './gql/task.gql'
+import { Task } from './gql/task.gql'
 import { TaskPermissionInterceptor } from './interceptor/task-permission.interceptor'
 import { TaskService } from './task.service'
 
-@Resolver(() => TaskTaskType)
+@Resolver(() => Task)
 export class TaskResolver {
   constructor(private readonly taskService: TaskService) {}
 
-  @Query(() => TaskTaskType, { name: 'taskTask' })
+  @Query(() => Task, { name: 'task' })
   @Directive('@auth')
   task(@Args({ type: () => String, name: 'id' }) id: string) {
     return this.taskService.findById(new Types.ObjectId(id))
   }
 
-  @Mutation(() => TaskTaskType, { name: 'taskCreateTask' })
+  @Mutation(() => Task, { name: 'createTask' })
   @Directive('@auth')
   createTask(
     @Args() dto: CreateTaskArgs,
@@ -48,7 +48,7 @@ export class TaskResolver {
     })
   }
 
-  @Mutation(() => TaskTaskType, { name: 'taskUpdateTask' })
+  @Mutation(() => Task, { name: 'updateTask' })
   @Directive('@auth')
   @UseInterceptors(TaskPermissionInterceptor)
   updateTask(@Args() dto: UpdateTaskArgs) {
@@ -60,8 +60,8 @@ export class TaskResolver {
     )
   }
 
-  @Mutation(() => TaskTaskType, {
-    name: 'taskDeleteTask',
+  @Mutation(() => Task, {
+    name: 'deleteTask',
     description: 'Delete task permanently',
   })
   @Directive('@auth')
@@ -70,13 +70,13 @@ export class TaskResolver {
     return this.taskService.delete(new Types.ObjectId(id))
   }
 
-  @ResolveField(() => UserType)
+  @ResolveField(() => UserModel)
   async user(@Parent() task: Pick<DocumentType<TaskModel>, 'populate'>) {
     const populatedTask = await task.populate('user')
     return populatedTask.user
   }
 
-  @ResolveField(() => SectionSectionType)
+  @ResolveField(() => SectionType)
   async section(@Parent() task: Pick<DocumentType<TaskModel>, 'populate'>) {
     const populatedTask = await task.populate('section')
     return populatedTask.section

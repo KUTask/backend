@@ -10,30 +10,33 @@ import {
 import { DocumentType } from '@typegoose/typegoose'
 import { DecodedIdToken } from 'firebase-admin/auth'
 import { Types } from 'mongoose'
-import { LectureMediaLectureMediaType } from 'src/lecture-media/gql/lecture-media.gql'
+import { LectureMedia } from 'src/lecture-media/gql/lecture-media.gql'
 import { LectureMediaModel } from 'src/models/lecture-media.model'
 import { SectionTypeModel } from 'src/models/section-type.model'
 import { SectionModel } from 'src/models/section.model'
 import { SubjectModel } from 'src/models/subject.model'
 import { TaskModel } from 'src/models/task.model'
-import { TaskTaskType } from 'src/task/gql/task.gql'
+import { Task } from 'src/task/gql/task.gql'
 import { User } from 'src/user/user.decorator'
-import { SectionSectionType } from './gql/section-type.gql'
-import { SectionLocalSectionType } from './gql/section.gql'
-import { SectionSubjectType } from './gql/subject.gql'
+import { SectionType } from './gql/section-type.gql'
+import { LocalSection } from './gql/section.gql'
+import { Subject } from './gql/subject.gql'
 import { SectionService } from './section.service'
 
-@Resolver(() => SectionLocalSectionType)
+@Resolver(() => LocalSection)
 export class SectionResolver {
   constructor(private readonly sectionService: SectionService) {}
 
-  @Query(() => [SectionLocalSectionType], { name: 'getRegisteredSections' })
+  @Query(() => [LocalSection], {
+    name: 'registeredSections',
+    description: "Get user's registered sections",
+  })
   @Directive('@auth')
   registeredSections(@User() user: Pick<DecodedIdToken, 'uid'>) {
     return this.sectionService.findRegisteredCourses(user.uid)
   }
 
-  @Query(() => SectionLocalSectionType, { name: 'sectionSection' })
+  @Query(() => LocalSection, { name: 'section' })
   @Directive('@auth')
   async section(
     @Args({
@@ -45,7 +48,7 @@ export class SectionResolver {
     return this.sectionService.findById(new Types.ObjectId(id))
   }
 
-  @Mutation(() => [SectionLocalSectionType], {
+  @Mutation(() => [LocalSection], {
     name: 'sectionRegister',
     description: 'Register Sections in Local Database (Not in my.ku.th)',
   })
@@ -59,7 +62,7 @@ export class SectionResolver {
     )
   }
 
-  @ResolveField(() => SectionSubjectType, { name: 'subject' })
+  @ResolveField(() => Subject, { name: 'subject' })
   async subject(
     @Parent() section: Pick<DocumentType<SectionModel>, 'populate'>,
   ) {
@@ -67,7 +70,7 @@ export class SectionResolver {
     return <DocumentType<SubjectModel>>populatedSection.subject
   }
 
-  @ResolveField(() => SectionSectionType, { name: 'sectionType' })
+  @ResolveField(() => SectionType, { name: 'sectionType' })
   async sectionType(
     @Parent() section: Pick<DocumentType<SectionModel>, 'populate'>,
   ) {
@@ -75,13 +78,13 @@ export class SectionResolver {
     return <DocumentType<SectionTypeModel>>populatedSection.section_type
   }
 
-  @ResolveField(() => [TaskTaskType])
+  @ResolveField(() => [Task])
   async tasks(@Parent() section: Pick<DocumentType<SectionModel>, 'populate'>) {
     const populatedSection = await section.populate('tasks')
     return <DocumentType<TaskModel>[]>populatedSection.tasks
   }
 
-  @ResolveField(() => [LectureMediaLectureMediaType])
+  @ResolveField(() => [LectureMedia])
   async lectureMedias(
     @Parent() section: Pick<DocumentType<SectionModel>, 'populate'>,
   ) {

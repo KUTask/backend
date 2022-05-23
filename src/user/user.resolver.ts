@@ -2,20 +2,20 @@ import { Directive, Mutation, Resolver, Query, Args } from '@nestjs/graphql'
 import { DecodedIdToken } from 'firebase-admin/auth'
 import mercurius from 'mercurius'
 import { User } from './user.decorator'
-import { UserType } from './user.model'
+import { User as UserModel } from './gql/user.gql'
 import { UserService } from './user.service'
 
-@Resolver(() => UserType)
+@Resolver(() => UserModel)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => [UserType], { name: 'users' })
+  @Query(() => [UserModel], { name: 'users' })
   @Directive('@auth')
   users() {
     return this.userService.find()
   }
 
-  @Query(() => UserType, {
+  @Query(() => UserModel, {
     name: 'user',
     description:
       'Get the current user [not pass id] or Get the user by id [pass id]',
@@ -29,7 +29,7 @@ export class UserResolver {
     return this.userService.findById(id)
   }
 
-  @Mutation(() => UserType, { name: 'userCreateUser' })
+  @Mutation(() => UserModel, { name: 'createUser' })
   @Directive('@auth')
   async createUser(
     @User()
@@ -52,7 +52,7 @@ export class UserResolver {
     )
   }
 
-  @Mutation(() => UserType, { name: 'userUpdateDisplayName' })
+  @Mutation(() => UserModel, { name: 'updateDisplayName' })
   @Directive('@auth')
   async updateDisplayName(
     @User() user: Pick<DecodedIdToken, 'uid'>,
@@ -61,8 +61,8 @@ export class UserResolver {
     return this.userService.updateDisplayName(user.uid, displayName)
   }
 
-  @Mutation(() => UserType, {
-    name: 'userVerifyEmail',
+  @Mutation(() => UserModel, {
+    name: 'verifyEmail',
     description: 'Check verify from id token',
   })
   @Directive('@auth')

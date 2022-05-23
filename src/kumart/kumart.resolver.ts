@@ -7,20 +7,20 @@ import {
   Resolver,
 } from '@nestjs/graphql'
 import { KuAuthArgs } from './args/ku-auth.args'
-import { ScheduleType } from './gql/schedule.gql'
-import { SectionType } from './gql/section.gql'
-import { TeacherType } from './gql/teacher.gql'
+import { Schedule } from './gql/schedule.gql'
+import { KUSectionType } from './gql/section.gql'
+import { KUTeacher } from './gql/teacher.gql'
 import { KumartService } from './kumart.service'
 
-@Resolver(() => SectionType)
+@Resolver(() => KUSectionType)
 export class KumartResolver {
   constructor(private readonly kumartService: KumartService) {}
 
-  @Query(() => [SectionType], { name: 'kumartSections' })
+  @Query(() => [KUSectionType], { name: 'kumartSections' })
   @Directive('@auth')
   async sections(
     @Args() { username, password }: KuAuthArgs,
-  ): Promise<SectionType[]> {
+  ): Promise<KUSectionType[]> {
     const sections = await this.kumartService.getRegisteredCourses(
       username,
       password,
@@ -32,12 +32,12 @@ export class KumartResolver {
   }
 
   @ResolveField()
-  teacher(@Parent() section: Pick<SectionType, 'teacher'>): TeacherType[] {
+  teacher(@Parent() section: Pick<KUSectionType, 'teacher'>): KUTeacher[] {
     return section.teacher
   }
 
   @ResolveField()
-  schedules(@Parent() section: Pick<SectionType, 'schedules'>): ScheduleType[] {
+  schedules(@Parent() section: Pick<KUSectionType, 'schedules'>): Schedule[] {
     return section.schedules
   }
 }
