@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/KUTask/backend/compare/v1.1.0...v1.1.1) (2022-05-23)
+
+
+### Bug Fixes
+
+* 🐛 Query user return nullable ([120452b](https://github.com/KUTask/backend/commit/120452b73d216b304d9b60c1334be02d2d55fdef))
+
 # [1.1.0](https://github.com/KUTask/backend/compare/v1.0.0...v1.1.0) (2022-05-23)
 
 
