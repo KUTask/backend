@@ -15,10 +15,18 @@ export class UserResolver {
     return this.userService.find()
   }
 
-  @Query(() => UserType, { name: 'user' })
+  @Query(() => UserType, {
+    name: 'user',
+    description:
+      'Get the current user [not pass id] or Get the user by id [pass id]',
+  })
   @Directive('@auth')
-  user(@User() user: Pick<DecodedIdToken, 'uid'>) {
-    return this.userService.findById(user.uid)
+  user(
+    @User() user: Pick<DecodedIdToken, 'uid'>,
+    @Args({ type: () => String, name: 'id', nullable: true }) id?: string,
+  ) {
+    id = id ?? user.uid
+    return this.userService.findById(id)
   }
 
   @Mutation(() => UserType, { name: 'userCreateUser' })

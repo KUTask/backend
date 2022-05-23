@@ -27,6 +27,11 @@ describe('UserResolver', () => {
       await resolver.user({ uid: 'uid' })
       expect(service.findById).toBeCalledWith('uid')
     })
+
+    it('shoud return user with specfic id', async () => {
+      await resolver.user({ uid: 'uid' }, 'id')
+      expect(service.findById).toBeCalledWith('id')
+    })
   })
 
   describe('users', () => {
