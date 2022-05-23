@@ -8,7 +8,6 @@ import fastifyCookie from '@fastify/cookie'
 import { SwaggerBuilder } from './swagger'
 import { initializeApp } from 'firebase-admin/app'
 import { credential } from 'firebase-admin'
-import { join } from 'path'
 import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap() {
