@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/KUTask/backend/compare/v1.0.0...v1.1.0) (2022-05-23)
+
+
+### Features
+
+* 🎸 Find user by id ([#23](https://github.com/KUTask/backend/issues/23)) ([cb18408](https://github.com/KUTask/backend/commit/cb1840801426f44f83c551501f8eace2e4be3ab7))
+
 # 1.0.0 (2022-05-22)
 
 
