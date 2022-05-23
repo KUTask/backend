@@ -1,4 +1,4 @@
-name: Release [Dev]
+name: Release
 
 on: 
   push:
@@ -70,4 +70,13 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/kutask/backend-dev:latest
-  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "kutask-backend" #Must be unique in Heroku
+          heroku_email: "hirasawa_au@yahoo.co.jp"
+          usedocker: true
