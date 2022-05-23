@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/KUTask/backend/compare/v2.0.0...v3.0.0) (2022-05-23)
+
+
+### Code Refactoring
+
+* 💡 Refacter Query Mutation name ([#24](https://github.com/KUTask/backend/issues/24)) ([462cad4](https://github.com/KUTask/backend/commit/462cad477a39b01fcdf8f014f27bf54a4411a175))
+
+
+### BREAKING CHANGES
+
+* 🧨 Some queries and mutations are changed name please refresh the doc.
+
 # [2.0.0](https://github.com/KUTask/backend/compare/v1.1.1...v2.0.0) (2022-05-23)
 
 
