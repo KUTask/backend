@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/KUTask/backend/compare/v1.1.1...v2.0.0) (2022-05-23)
+
+
+### Code Refactoring
+
+* 💡 Change registeredCourse Mutation ([d52d47b](https://github.com/KUTask/backend/commit/d52d47ba86a3395ee33dcf9dbb89f67515255198))
+
+
+### BREAKING CHANGES
+
+* 🧨 sections -> getRegisteredSection
+
 ## [1.1.1](https://github.com/KUTask/backend/compare/v1.1.0...v1.1.1) (2022-05-23)
 
 
