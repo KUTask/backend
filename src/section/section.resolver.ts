@@ -27,9 +27,9 @@ import { SectionService } from './section.service'
 export class SectionResolver {
   constructor(private readonly sectionService: SectionService) {}
 
-  @Query(() => [SectionLocalSectionType], { name: 'sectionSections' })
+  @Query(() => [SectionLocalSectionType], { name: 'getRegisteredSections' })
   @Directive('@auth')
-  async sections(@User() user: Pick<DecodedIdToken, 'uid'>) {
+  registeredSections(@User() user: Pick<DecodedIdToken, 'uid'>) {
     return this.sectionService.findRegisteredCourses(user.uid)
   }
 

@@ -22,10 +22,10 @@ describe('SectionResolver', () => {
     expect(resolver).toBeDefined()
   })
 
-  describe('sections', () => {
+  describe('registeredSection', () => {
     it('should service.findRegisterCourses be called with correct value', async () => {
       const uid = 'uid'
-      await resolver.sections({ uid })
+      await resolver.registeredSections({ uid })
       expect(service.findRegisteredCourses).toHaveBeenCalledWith(uid)
     })
   })
