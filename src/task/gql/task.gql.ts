@@ -1,9 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { SectionSectionType } from 'src/section/gql/section-type.gql'
-import { UserType } from 'src/user/user.model'
+import { SectionType } from 'src/section/gql/section-type.gql'
+import { User } from 'src/user/gql/user.gql'
 
 @ObjectType()
-export class TaskTaskType {
+export class Task {
   @Field()
   id: string
 
@@ -19,9 +19,9 @@ export class TaskTaskType {
   @Field()
   dueDate: string
 
-  @Field(() => UserType, { description: 'The user who created this task' })
-  user: UserType
+  @Field(() => User, { description: 'The user who created this task' })
+  user: User
 
-  @Field(() => SectionSectionType)
-  section: SectionSectionType
+  @Field(() => SectionType)
+  section: SectionType
 }

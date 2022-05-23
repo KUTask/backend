@@ -1,9 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { SectionLocalSectionType } from 'src/section/gql/section.gql'
-import { UserType } from 'src/user/user.model'
+import { LocalSection } from 'src/section/gql/section.gql'
+import { User } from 'src/user/gql/user.gql'
 
 @ObjectType()
-export class LectureMediaLectureMediaType {
+export class LectureMedia {
   @Field()
   id: string
 
@@ -13,15 +13,15 @@ export class LectureMediaLectureMediaType {
   @Field()
   link: string
 
-  @Field()
+  @Field({ description: 'Icon link' })
   icon: string
 
   @Field()
   description?: string
 
-  @Field(() => SectionLocalSectionType)
-  section: SectionLocalSectionType
+  @Field(() => LocalSection)
+  section: LocalSection
 
-  @Field(() => UserType)
-  user: UserType
+  @Field(() => User)
+  user: User
 }

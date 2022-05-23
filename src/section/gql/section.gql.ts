@@ -1,26 +1,26 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { LectureMediaLectureMediaType } from 'src/lecture-media/gql/lecture-media.gql'
-import { TaskTaskType } from 'src/task/gql/task.gql'
-import { SectionCourseDate } from './coursedate.gql'
-import { SectionSectionType } from './section-type.gql'
-import { SectionSubjectType } from './subject.gql'
+import { LectureMedia } from 'src/lecture-media/gql/lecture-media.gql'
+import { Task } from 'src/task/gql/task.gql'
+import { CourseDate } from './coursedate.gql'
+import { SectionType } from './section-type.gql'
+import { Subject } from './subject.gql'
 
 @ObjectType()
-export class SectionLocalSectionType {
+export class LocalSection {
   @Field()
   id: string
 
   @Field()
   sectionId: string
 
-  @Field(() => SectionSubjectType)
-  subject: SectionSubjectType
+  @Field(() => Subject)
+  subject: Subject
 
-  @Field(() => SectionSectionType)
-  sectionType: SectionSectionType
+  @Field(() => SectionType)
+  sectionType: SectionType
 
-  @Field(() => [SectionCourseDate])
-  coursedate: SectionCourseDate[]
+  @Field(() => [CourseDate])
+  coursedate: CourseDate[]
 
   @Field(() => [String])
   teacherNames?: string[]
@@ -28,9 +28,9 @@ export class SectionLocalSectionType {
   @Field(() => [String])
   teacherNamesEn?: string[]
 
-  @Field(() => [TaskTaskType])
-  tasks: TaskTaskType[]
+  @Field(() => [Task])
+  tasks: Task[]
 
-  @Field(() => [LectureMediaLectureMediaType])
-  lectureMedias: LectureMediaLectureMediaType[]
+  @Field(() => [LectureMedia])
+  lectureMedias: LectureMedia[]
 }

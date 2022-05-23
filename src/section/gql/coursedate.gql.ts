@@ -1,8 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { CourseDate } from 'src/models/section.model'
 
 @ObjectType()
-export class SectionCourseDate implements CourseDate {
+export class CourseDate {
   @Field()
   day: string
 
