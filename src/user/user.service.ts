@@ -92,17 +92,7 @@ export class UserService {
 
   registerSections(userId: string, sections: Types.ObjectId[]) {
     return this.userModel
-      .findByIdAndUpdate(
-        userId,
-        {
-          $push: {
-            sections: {
-              $each: sections,
-            },
-          },
-        },
-        { new: true },
-      )
+      .findByIdAndUpdate(userId, { sections }, { new: true })
       .exec()
   }
 }
