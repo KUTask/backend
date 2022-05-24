@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { SectionType } from 'src/section/gql/section-type.gql'
+import { LocalSection } from 'src/section/gql/section.gql'
 import { User } from 'src/user/gql/user.gql'
 
 @ObjectType()
@@ -22,6 +23,6 @@ export class Task {
   @Field(() => User, { description: 'The user who created this task' })
   user: User
 
-  @Field(() => SectionType)
-  section: SectionType
+  @Field(() => LocalSection)
+  section: LocalSection
 }
