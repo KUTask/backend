@@ -215,11 +215,7 @@ describe('UserService', () => {
       expect(userModel.findByIdAndUpdate).toBeCalledWith(
         userId,
         {
-          $push: {
-            sections: {
-              $each: sections,
-            },
-          },
+          sections,
         },
         { new: true },
       )
