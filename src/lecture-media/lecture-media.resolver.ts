@@ -105,6 +105,7 @@ export class LectureMediaResolver {
   @ResolveField(() => UserModel)
   async user(@Parent() lectureMedia: DocumentType<LectureMediaModel>) {
     const populatedLectureMedia = await lectureMedia.populate('user')
+    console.log(populatedLectureMedia.user)
     return populatedLectureMedia.user
   }
 }

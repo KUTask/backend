@@ -16,7 +16,7 @@ export class LectureMedia {
   @Field({ description: 'Icon link' })
   icon: string
 
-  @Field()
+  @Field({ nullable: true })
   description?: string
 
   @Field(() => LocalSection)

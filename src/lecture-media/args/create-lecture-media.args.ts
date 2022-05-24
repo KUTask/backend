@@ -11,7 +11,7 @@ export class CreateLectureMediaArgs {
   @Field()
   icon: string
 
-  @Field()
+  @Field({ nullable: true })
   description?: string
 
   @Field({ description: 'section object id' })
