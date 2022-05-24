@@ -1,3 +1,11 @@
+## [3.0.4](https://github.com/KUTask/backend/compare/v3.0.3...v3.0.4) (2022-05-24)
+
+
+### Bug Fixes
+
+* 🐛 force register ([a5f5ac9](https://github.com/KUTask/backend/commit/a5f5ac9dbf85dde8a86fbe7443b519bf9e7b7687))
+* 🐛 remove tags in task ([753886e](https://github.com/KUTask/backend/commit/753886e1a21b27ba663c178673806f732a269773))
+
 ## [3.0.3](https://github.com/KUTask/backend/compare/v3.0.2...v3.0.3) (2022-05-24)
 
 
