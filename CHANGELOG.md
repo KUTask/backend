@@ -1,3 +1,28 @@
+## [3.0.1](https://github.com/KUTask/backend/compare/v3.0.0...v3.0.1) (2022-05-24)
+
+
+### Bug Fixes
+
+* 🐛 bump @nestjs/cli 8.2.5 -> 8.2.6 ([cddae0a](https://github.com/KUTask/backend/commit/cddae0aada07ebfaf32a90d983e8e98a6f22633b))
+* 🐛 bump @nestjs/config 2.0.0 -> 2.0.1 ([ded337e](https://github.com/KUTask/backend/commit/ded337e99cfb18f8142e8be97d840d0371040e90))
+* 🐛 bump @nestjs/graphql 10.0.11 -> 10.0.12 ([5806a85](https://github.com/KUTask/backend/commit/5806a85501e0da8db7ddecac8d4b62e09d910eb5))
+* 🐛 bump @nestjs/mercurius 10.0.11 -> 10.0.12 ([6151e85](https://github.com/KUTask/backend/commit/6151e85bf3d96aed04193d0a9be6f47210201358))
+* 🐛 bump @nestjs/schedule 1.1.0 -> 2.0.1 ([8948577](https://github.com/KUTask/backend/commit/8948577902349e3f1e0c50d1058dfd719fcbe85c))
+* 🐛 bump @types/jest 27.4.1 -> 27.5.1 ([2aa0deb](https://github.com/KUTask/backend/commit/2aa0deba9692f75423725af8817691c52ffb85b4))
+* 🐛 bump eslint 8.0.1 -> 8.16.0 ([06b3b09](https://github.com/KUTask/backend/commit/06b3b09e0c12a125e431701e86fb92b2dbd6609e))
+* 🐛 bump eslint-config-prettier 8.3.0 -> 8.5.0 ([e723fa1](https://github.com/KUTask/backend/commit/e723fa1c0f120f1c6e57309deeb23715aea6d6b0))
+* 🐛 bump jest 27 -> 28 ([7993b95](https://github.com/KUTask/backend/commit/7993b95d65fb9e1fb11e34a6f3cf1f504a332f20))
+* 🐛 bump mercurius 9.5.0 -> 9.6.0 ([a98c1ba](https://github.com/KUTask/backend/commit/a98c1ba5a2b3c3ffc0893459597c86d7891cb524))
+* 🐛 bump mongoose 6.3.3 -> 6.3.4 ([a045f0f](https://github.com/KUTask/backend/commit/a045f0fb0fbdee0c0870af8ae49e7546fef161e6))
+* 🐛 bump prettier 2.3.2 -> 2.6.2 ([d80d299](https://github.com/KUTask/backend/commit/d80d299d6d20c7d56cb04c57871869a156e38621))
+* 🐛 bump rxjs 7.2.0 -> 7.5.5 ([26aa5b3](https://github.com/KUTask/backend/commit/26aa5b36b14a9b6cb79bfedd544ddf1c399cc83d))
+* 🐛 bump source-map-support 0.5.20 -> 0.5.21 ([da8b49a](https://github.com/KUTask/backend/commit/da8b49a7b9427559dcc58efbd83b337a3f8f864f))
+* 🐛 bump supertest 6.1.3 -> 6.2.3 ([db8dd42](https://github.com/KUTask/backend/commit/db8dd4265c4848dbbc58d94dcc698b8684203fd9))
+* 🐛 bump ts-loader 9.2.3 -> 9.3.0 ([c208b3c](https://github.com/KUTask/backend/commit/c208b3c49f0018355a9364be9091a85af594be9d))
+* 🐛 bump ts-node 10.0.0 -> 10.8.0 ([67ec465](https://github.com/KUTask/backend/commit/67ec465522e131184c8f70aa18ea9b7b3fed8d99))
+* 🐛 bump tsconfig-paths 3.10.0 -> 4.0.0 ([1c1beab](https://github.com/KUTask/backend/commit/1c1beaba0c5849a815951c8d0127bfe66e8680f2))
+* 🐛 bump typescript 4.3.5 -> 4.6.4 ([d166f1b](https://github.com/KUTask/backend/commit/d166f1b380096e8fe4938f3fe2d274bcc4ee3c45))
+
 # [3.0.0](https://github.com/KUTask/backend/compare/v2.0.0...v3.0.0) (2022-05-23)
 
 
