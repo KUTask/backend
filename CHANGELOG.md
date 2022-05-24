@@ -1,3 +1,11 @@
+## [3.0.3](https://github.com/KUTask/backend/compare/v3.0.2...v3.0.3) (2022-05-24)
+
+
+### Bug Fixes
+
+* 🐛 description can nullable; resolve sectionType ([8c608d2](https://github.com/KUTask/backend/commit/8c608d212fe7bb3b68e1c365cbd0b9adfa70e12d))
+* 🐛 resolve section ([7aac69f](https://github.com/KUTask/backend/commit/7aac69ff1bc3eb04c830fa5cccb32cdba2ce6c53))
+
 ## [3.0.2](https://github.com/KUTask/backend/compare/v3.0.1...v3.0.2) (2022-05-24)
 
 
