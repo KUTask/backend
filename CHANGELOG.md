@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/KUTask/backend/compare/v3.0.1...v3.0.2) (2022-05-24)
+
+
+### Bug Fixes
+
+* 🐛 kumart return local id section ([befa347](https://github.com/KUTask/backend/commit/befa347970749975e40b6f994c98c717cfae01e0))
+
 ## [3.0.1](https://github.com/KUTask/backend/compare/v3.0.0...v3.0.1) (2022-05-24)
 
 
