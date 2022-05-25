@@ -13,7 +13,7 @@ export class Task {
   @Field({ nullable: true })
   description?: string
 
-  @Field()
+  @Field({ description: 'Unit timestamp in ms' })
   dueDate: string
 
   @Field(() => User, { description: 'The user who created this task' })
