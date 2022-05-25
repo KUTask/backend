@@ -1,3 +1,10 @@
+## [3.0.6](https://github.com/KUTask/backend/compare/v3.0.5...v3.0.6) (2022-05-25)
+
+
+### Bug Fixes
+
+* 🐛 update graphql doc ([56f8b5c](https://github.com/KUTask/backend/commit/56f8b5c8683991459ff28c66b1ad27f9f7b08c21))
+
 ## [3.0.5](https://github.com/KUTask/backend/compare/v3.0.4...v3.0.5) (2022-05-25)
 
 
