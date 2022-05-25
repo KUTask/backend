@@ -9,10 +9,7 @@ export class CreateTaskArgs {
   @Field({ nullable: true })
   description?: string
 
-  @Field(() => [String])
-  tags: string[]
-
-  @Field({ description: 'Unix timestamp' })
+  @Field({ description: 'Unix timestamp in ms' })
   dueDate: string
 
   @Field({ description: 'The id of the section this task belongs to' })

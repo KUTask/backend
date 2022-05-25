@@ -19,9 +19,6 @@ export class TaskModel extends BaseModel {
   @prop()
   description?: string
 
-  @prop({ required: true })
-  tags: string[]
-
   @prop({ required: true, alias: 'dueDate' })
   due_date: Date
 

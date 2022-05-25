@@ -36,7 +36,6 @@ describe('TaskResolver', () => {
       const name = 'name'
       const section = new Types.ObjectId()
       const dueDate = Date.now().toString()
-      const tags = []
       const user = ''
       const description = ''
       await resolver.createTask(
@@ -44,7 +43,6 @@ describe('TaskResolver', () => {
           name,
           section: section.toHexString(),
           dueDate,
-          tags,
           description,
         },
         { uid: user },
@@ -53,7 +51,6 @@ describe('TaskResolver', () => {
         name,
         section,
         due_date: new Date(+dueDate),
-        tags,
         user,
         description,
       })

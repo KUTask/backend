@@ -42,7 +42,6 @@ export class TaskResolver {
       name: dto.name,
       section: new Types.ObjectId(dto.section),
       due_date: new Date(+dto.dueDate),
-      tags: dto.tags,
       user: user.uid,
       description: dto.description,
     })
