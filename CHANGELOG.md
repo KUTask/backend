@@ -1,3 +1,10 @@
+## [3.0.5](https://github.com/KUTask/backend/compare/v3.0.4...v3.0.5) (2022-05-25)
+
+
+### Bug Fixes
+
+* 🐛 remove tags completely ([78ead13](https://github.com/KUTask/backend/commit/78ead13c739958e44caf1f0f5b8dfea8372e2bd5))
+
 ## [3.0.4](https://github.com/KUTask/backend/compare/v3.0.3...v3.0.4) (2022-05-24)
 
 
