@@ -23,6 +23,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@discord-nestjs/common": "^3.3.1",
     "@discord-nestjs/core": "^3.3.1",
     "@fastify/cookie": "^6.0.0",
     "@hirasawa_au/nestjs-typegoose": "^8.0.1",
