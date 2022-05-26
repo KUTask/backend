@@ -79,4 +79,5 @@ PORT=<your-server-port>
 FIREBASE_CLIENT_EMAIL=<your-firebase-client-email>
 FIREBASE_PRIVATE_KEY=<your-firebase-private-key>
 FIREBASE_PROJECT_ID=<your-firebase-project-id>
+DISCORD_BOT_TOKEN=<your-discord-bot-token>
 ```
