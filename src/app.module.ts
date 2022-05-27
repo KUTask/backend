@@ -24,6 +24,7 @@ import { LectureMediaModule } from './lecture-media/lecture-media.module'
 import { DiscordModule } from '@discord-nestjs/core'
 import { DiscordBotConfigService } from './configs/discord-bot.config.service'
 import { DiscordBotModule } from './discord-bot/discord-bot.module'
+import { DiscordSlashCommandModule } from './discord-bot/commands/discord-slash-command.module'
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { DiscordBotModule } from './discord-bot/discord-bot.module'
       useClass: DiscordBotConfigService,
     }),
     DiscordBotModule,
+    DiscordSlashCommandModule,
   ],
   controllers: [AppController],
   providers: [AppService],

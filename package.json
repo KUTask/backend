@@ -47,6 +47,7 @@
     "lodash": "^4.17.21",
     "mercurius": "^9.6.0",
     "mongoose": "^6.3.4",
+    "nestjs-dynamic-providers": "^0.1.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.5",
