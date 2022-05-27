@@ -21,6 +21,10 @@ import { KumartModule } from './kumart/kumart.module'
 import { SectionModule } from './section/section.module'
 import { TaskModule } from './task/task.module'
 import { LectureMediaModule } from './lecture-media/lecture-media.module'
+import { DiscordModule } from '@discord-nestjs/core'
+import { DiscordBotConfigService } from './configs/discord-bot.config.service'
+import { DiscordBotModule } from './discord-bot/discord-bot.module'
+import { DiscordSlashCommandModule } from './discord-bot/commands/discord-slash-command.module'
 
 @Module({
   imports: [
@@ -42,6 +46,11 @@ import { LectureMediaModule } from './lecture-media/lecture-media.module'
     SectionModule,
     TaskModule,
     LectureMediaModule,
+    DiscordModule.forRootAsync({
+      useClass: DiscordBotConfigService,
+    }),
+    DiscordBotModule,
+    DiscordSlashCommandModule,
   ],
   controllers: [AppController],
   providers: [AppService],
