@@ -15,4 +15,7 @@ export class UpdateTaskArgs {
 
   @Field({ description: 'Unix timestamp', nullable: true })
   dueDate?: string
+
+  @Field({ description: 'Local Section ID', nullable: true })
+  section?: string
 }
