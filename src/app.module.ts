@@ -21,6 +21,7 @@ import { KumartModule } from './kumart/kumart.module'
 import { SectionModule } from './section/section.module'
 import { TaskModule } from './task/task.module'
 import { LectureMediaModule } from './lecture-media/lecture-media.module'
+import { AdminModule } from './admin/admin.module'
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { LectureMediaModule } from './lecture-media/lecture-media.module'
     SectionModule,
     TaskModule,
     LectureMediaModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
