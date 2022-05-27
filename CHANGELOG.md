@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/KUTask/backend/compare/v3.0.6...v3.1.0) (2022-05-27)
+
+
+### Features
+
+* 🎸 Add section field to update task ([#27](https://github.com/KUTask/backend/issues/27)) ([3bb1956](https://github.com/KUTask/backend/commit/3bb19561ca802d1260b33b77c3e837083fca1e20))
+
 ## [3.0.6](https://github.com/KUTask/backend/compare/v3.0.5...v3.0.6) (2022-05-25)
 
 
